@@ -14,11 +14,17 @@ function Fact({ value, label }: { value: string; label: string }) {
   );
 }
 
+type Voto = "si" | "no" | null;
+
 /** Slide 2 — El problema: el caso de Martín + la pregunta para "votar". */
 export function SlideProblema({ model }: { model: UseModel }) {
   const { params } = model;
-  const [votos, setVotos] = useState({ si: 0, no: 0 });
+  // Un voto por dispositivo, con toggle: re-tocar la misma opción lo saca; tocar la otra lo mueve.
+  const [voto, setVoto] = useState<Voto>(null);
+  const elegir = (op: Exclude<Voto, null>) => setVoto((actual) => (actual === op ? null : op));
+  const votos = { si: voto === "si" ? 1 : 0, no: voto === "no" ? 1 : 0 };
   const totalVotos = votos.si + votos.no;
+
   return (
     <SlideFrame eyebrow="El problema" title="Martín tiene que decidir">
       <div className="grid gap-10 lg:grid-cols-[1.1fr_1fr]">
@@ -48,8 +54,11 @@ export function SlideProblema({ model }: { model: UseModel }) {
             <div className="flex gap-3">
               <button
                 type="button"
-                onClick={() => setVotos((v) => ({ ...v, si: v.si + 1 }))}
-                className="flex-1 rounded-xl border border-line p-3 text-left transition-colors hover:border-car-nafta"
+                onClick={() => elegir("si")}
+                aria-pressed={voto === "si"}
+                className={`flex-1 rounded-xl border p-3 text-left transition-colors ${
+                  voto === "si" ? "border-car-nafta bg-car-nafta-soft" : "border-line hover:border-car-nafta"
+                }`}
               >
                 <div className="flex items-center justify-between text-sm">
                   <span className="text-ink">Sí, el más barato gana</span>
@@ -61,8 +70,11 @@ export function SlideProblema({ model }: { model: UseModel }) {
               </button>
               <button
                 type="button"
-                onClick={() => setVotos((v) => ({ ...v, no: v.no + 1 }))}
-                className="flex-1 rounded-xl border border-line p-3 text-left transition-colors hover:border-car-electrico"
+                onClick={() => elegir("no")}
+                aria-pressed={voto === "no"}
+                className={`flex-1 rounded-xl border p-3 text-left transition-colors ${
+                  voto === "no" ? "border-car-electrico bg-car-electrico-soft" : "border-line hover:border-car-electrico"
+                }`}
               >
                 <div className="flex items-center justify-between text-sm">
                   <span className="text-ink">No, depende de cuánto maneje</span>
@@ -73,7 +85,11 @@ export function SlideProblema({ model }: { model: UseModel }) {
                 </div>
               </button>
             </div>
-            <p className="text-xs text-faint">Tocá para votar (o que vote la clase a mano alzada). Lo respondemos con números en 3 slides.</p>
+            <p className="text-xs text-faint">
+              {voto
+                ? "Listo, tu voto quedó marcado. Tocá de nuevo para cambiarlo o sacarlo."
+                : "Tocá para votar (uno por persona). Lo respondemos con números en 3 slides."}
+            </p>
           </div>
         </div>
       </div>

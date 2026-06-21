@@ -17,7 +17,7 @@ const W = 860;
 const H = 470;
 const M = { left: 92, right: 44, top: 28, bottom: 52 };
 
-const EMOJI: Record<AutoKey, string> = { nafta: "🚗", hibrido: "🚙", electrico: "⚡" };
+const EMOJI: Record<AutoKey, string> = { nafta: "⛽", hibrido: "🔋", electrico: "⚡" };
 
 /**
  * Carrera de costos — las rectas son pistas; un auto por cada una avanza con K.
