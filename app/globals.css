@@ -1,26 +1,134 @@
 @import "tailwindcss";
 
+/* ----------------------------------------------------------------------------
+   Tokens de diseño — paleta editorial / "paper técnico" (Córdoba TP).
+   Fuente única de color: los colores por auto viven acá y se exponen como
+   utilidades de Tailwind y como CSS vars que Recharts consume directamente.
+---------------------------------------------------------------------------- */
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* superficie / tinta (luz cálida, sin dark automático) */
+  --paper: oklch(0.984 0.006 92);
+  --surface: oklch(0.997 0.003 92);
+  --surface-2: oklch(0.963 0.007 92);
+  --ink: oklch(0.24 0.012 60);
+  --muted: oklch(0.5 0.012 60);
+  --faint: oklch(0.63 0.01 60);
+  --line: oklch(0.9 0.006 85);
+  --line-strong: oklch(0.83 0.009 85);
+  --grid: oklch(0.92 0.005 90);
+
+  /* acento UI (azul) — reservado para interacción y la línea de Martín */
+  --accent: oklch(0.52 0.13 256);
+  --accent-soft: oklch(0.93 0.04 256);
+
+  /* autos (color semántico, consistente en toda la app) */
+  --car-nafta: oklch(0.58 0.17 30);
+  --car-nafta-soft: oklch(0.94 0.045 35);
+  --car-hibrido: oklch(0.72 0.15 66);
+  --car-hibrido-soft: oklch(0.95 0.06 78);
+  --car-electrico: oklch(0.6 0.13 156);
+  --car-electrico-soft: oklch(0.93 0.05 158);
+
+  /* movimiento */
+  --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, monospace;
+
+  --color-paper: var(--paper);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-faint: var(--faint);
+  --color-line: var(--line);
+  --color-line-strong: var(--line-strong);
+  --color-accent: var(--accent);
+  --color-accent-soft: var(--accent-soft);
+
+  --color-car-nafta: var(--car-nafta);
+  --color-car-nafta-soft: var(--car-nafta-soft);
+  --color-car-hibrido: var(--car-hibrido);
+  --color-car-hibrido-soft: var(--car-hibrido-soft);
+  --color-car-electrico: var(--car-electrico);
+  --color-car-electrico-soft: var(--car-electrico-soft);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+  body {
+    background-color: var(--paper);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+  ::selection {
+    background: var(--accent);
+    color: white;
+  }
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+  /* números tabulares para alinear cifras */
+  .tnum {
+    font-variant-numeric: tabular-nums;
+    font-feature-settings: "tnum";
   }
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+/* Fondo papel cuadriculado (guiño matemático), muy sutil y con fade a los bordes */
+.graph-paper {
+  background-image:
+    linear-gradient(to right, var(--grid) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid) 1px, transparent 1px);
+  background-size: 32px 32px;
+  background-position: center;
+}
+.graph-paper-fade {
+  -webkit-mask-image: radial-gradient(ellipse 110% 90% at 50% 40%, black 55%, transparent 100%);
+  mask-image: radial-gradient(ellipse 110% 90% at 50% 40%, black 55%, transparent 100%);
+}
+
+/* Scrollbar discreta */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--line-strong) transparent;
+}
+
+/* Atmósfera: mesh gradient sutil que deriva detrás de todo */
+.atmosphere {
+  position: fixed;
+  inset: -20%;
+  z-index: -10;
+  pointer-events: none;
+  background:
+    radial-gradient(38% 38% at 18% 28%, var(--car-nafta-soft), transparent 70%),
+    radial-gradient(38% 38% at 82% 22%, var(--car-hibrido-soft), transparent 70%),
+    radial-gradient(42% 42% at 60% 82%, var(--car-electrico-soft), transparent 70%);
+  opacity: 0.4;
+  filter: blur(48px);
+}
+
+@media (prefers-reduced-motion: no-preference) {
+  .atmosphere {
+    animation: atm-drift 22s ease-in-out infinite alternate;
+  }
+  @keyframes atm-drift {
+    0% { transform: translate3d(0, 0, 0) scale(1); }
+    100% { transform: translate3d(2.5%, -2%, 0) scale(1.08); }
+  }
+  .graph-paper-breathe {
+    animation: grid-breathe 10s ease-in-out infinite;
+  }
+  @keyframes grid-breathe {
+    0%, 100% { background-size: 32px 32px; }
+    50% { background-size: 35px 35px; }
+  }
 }

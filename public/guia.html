@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Guía de estudio — ¿Qué auto conviene? · TP Modelización</title>
+  <style>
+    :root {
+      --paper: oklch(0.984 0.006 92);
+      --surface: oklch(0.997 0.003 92);
+      --ink: oklch(0.24 0.012 60);
+      --muted: oklch(0.5 0.012 60);
+      --faint: oklch(0.63 0.01 60);
+      --line: oklch(0.86 0.008 85);
+      --accent: oklch(0.52 0.13 256);
+      --nafta: oklch(0.58 0.17 30);
+      --hibrido: oklch(0.62 0.15 66);
+      --electrico: oklch(0.55 0.13 156);
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      background: var(--paper);
+      color: var(--ink);
+      font-family: ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
+    .sheet { max-width: 920px; margin: 0 auto; padding: 48px 40px 64px; }
+    header { border-bottom: 3px solid var(--ink); padding-bottom: 20px; margin-bottom: 28px; }
+    .kicker { font-size: 12px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--accent); font-weight: 700; }
+    h1 { font-size: 2.5rem; line-height: 1.05; margin: 8px 0 14px; letter-spacing: -0.01em; }
+    h1 span { color: var(--accent); }
+    .meta { display: flex; flex-wrap: wrap; gap: 24px; align-items: center; font-size: 0.9rem; color: var(--muted); }
+    .meta .qr { display: flex; align-items: center; gap: 10px; margin-left: auto; }
+    .meta .qr img { width: 76px; height: 76px; border: 1px solid var(--line); border-radius: 8px; padding: 3px; background: var(--surface); }
+    .meta strong { color: var(--ink); }
+    h2 {
+      font-size: 1.3rem; margin: 36px 0 12px; padding-left: 12px;
+      border-left: 4px solid var(--accent);
+    }
+    h3 { font-size: 1.02rem; margin: 20px 0 6px; color: var(--ink); }
+    p { margin: 8px 0; color: var(--muted); }
+    .lead { font-size: 1.05rem; color: var(--ink); }
+    code, .fml {
+      font-family: ui-monospace, "SF Mono", "Cascadia Code", Consolas, monospace;
+      background: var(--surface); border: 1px solid var(--line); border-radius: 6px;
+      padding: 1px 6px; font-size: 0.92em; color: var(--ink);
+    }
+    .fml-block {
+      display: block; padding: 12px 16px; margin: 10px 0; font-size: 1rem;
+      background: var(--surface); border: 1px solid var(--line); border-left: 4px solid var(--accent);
+      border-radius: 8px; white-space: pre-wrap;
+    }
+    table { width: 100%; border-collapse: collapse; margin: 12px 0; font-size: 0.9rem; }
+    th, td { text-align: right; padding: 8px 10px; border-bottom: 1px solid var(--line); }
+    th:first-child, td:first-child { text-align: left; }
+    thead th { color: var(--faint); font-weight: 600; text-transform: uppercase; letter-spacing: 0.04em; font-size: 0.72rem; }
+    tbody tr td:first-child { font-weight: 600; color: var(--ink); }
+    .num { font-variant-numeric: tabular-nums; font-family: ui-monospace, monospace; }
+    .dot { display: inline-block; width: 9px; height: 9px; border-radius: 50%; margin-right: 6px; vertical-align: middle; }
+    .c-nafta { background: var(--nafta); } .c-hibrido { background: var(--hibrido); } .c-electrico { background: var(--electrico); }
+    .t-nafta { color: var(--nafta); } .t-hibrido { color: var(--hibrido); } .t-electrico { color: var(--electrico); }
+    .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 14px 0; }
+    .card { border: 1px solid var(--line); border-radius: 12px; padding: 16px; background: var(--surface); }
+    .card .who { font-size: 0.72rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--faint); }
+    .card .name { font-size: 1.15rem; font-weight: 700; margin: 2px 0 8px; }
+    .card ul { margin: 0; padding-left: 18px; font-size: 0.85rem; color: var(--muted); }
+    .card li { margin: 4px 0; }
+    .callout {
+      background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
+      padding: 16px 18px; margin: 16px 0;
+    }
+    .callout .big { font-size: 1.4rem; font-weight: 700; }
+    .note { font-size: 0.82rem; color: var(--faint); border-top: 1px solid var(--line); padding-top: 8px; margin-top: 8px; }
+    .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; }
+    footer { margin-top: 40px; padding-top: 16px; border-top: 1px solid var(--line); font-size: 0.78rem; color: var(--faint); }
+    @media print {
+      body { background: white; }
+      .sheet { padding: 0; max-width: none; }
+      h2 { break-after: avoid; }
+      .cards, table, .callout, .grid2 { break-inside: avoid; }
+      a { color: var(--ink); text-decoration: none; }
+    }
+    @media (max-width: 720px) {
+      .cards, .grid2 { grid-template-columns: 1fr; }
+      h1 { font-size: 2rem; }
+      .meta .qr { margin-left: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="sheet">
+    <header>
+      <div class="kicker">Guía de estudio · Trabajo Práctico de Modelización Matemática</div>
+      <h1>¿Qué auto conviene <span>y cómo pagarlo?</span></h1>
+      <div class="meta">
+        <div><strong>Integrantes:</strong> Mateo Zavala · Enzo Gaido · Bautista Defago</div>
+        <div><strong>Exposición:</strong> 23/06/2026</div>
+        <div class="qr">
+          <img src="qr.svg" alt="QR a la app" />
+          <span>La app interactiva:<br /><strong>tp-autos.vercel.app</strong></span>
+        </div>
+      </div>
+    </header>
+
+    <p class="lead">
+      Martín tiene que decidir qué auto comprar —nafta, híbrido o eléctrico— y cómo pagarlo. Una sola decisión real
+      donde conviven cuatro familias de funciones: <strong>lineales</strong> (costo total según los km),
+      <strong>exponenciales</strong> (la suba de la nafta), <strong>interés compuesto</strong> (el financiamiento) y
+      <strong>porcentajes</strong> (patente, inflación, intereses).
+    </p>
+
+    <h2>1. El modelo lineal — costo total de tener el auto</h2>
+    <p>
+      Cada auto tiene un costo total que crece linealmente con los kilómetros totales <code>K</code> (km/año × años):
+    </p>
+    <span class="fml-block">C(K) = ordenada + pendiente · K
+
+ordenada  = precio + horizonte · (seguro + precio · patente)   ← costos fijos
+pendiente = energía/km + mantenimiento/km                      ← costo variable</span>
+    <p>
+      La <strong>ordenada</strong> es lo que pagás sí o sí (compra, seguro, patente); la <strong>pendiente</strong> es
+      cuánto te cuesta cada kilómetro. Un auto caro de comprar pero barato de usar (el eléctrico) tiene ordenada alta y
+      pendiente baja: su recta arranca arriba pero sube despacio.
+    </p>
+
+    <h3>Datos de referencia (Córdoba, junio 2026)</h3>
+    <table>
+      <thead>
+        <tr><th>Auto</th><th>Precio</th><th>Consumo</th><th>Mant. $/km</th><th>Seguro/año</th></tr>
+      </thead>
+      <tbody>
+        <tr><td><span class="dot c-nafta"></span>Nafta — Corolla Cross XEI 2.0</td><td class="num">$55.944.000</td><td class="num">6,1 L/100km</td><td class="num">15</td><td class="num">$2.000.000</td></tr>
+        <tr><td><span class="dot c-hibrido"></span>Híbrido — Corolla Cross XEI HEV</td><td class="num">$57.355.000</td><td class="num">5,0 L/100km</td><td class="num">12</td><td class="num">$2.100.000</td></tr>
+        <tr><td><span class="dot c-electrico"></span>Eléctrico — BYD Atto 3 *</td><td class="num">$63.000.000</td><td class="num">15,9 kWh/100km</td><td class="num">7</td><td class="num">$2.400.000</td></tr>
+      </tbody>
+    </table>
+    <p class="note">
+      Energía: nafta $2.084/L · luz $200/kWh. Patente 3% anual del valor. Horizonte: 5 años. Martín maneja 15.000 km/año.
+      <br />* El Atto 3 se usa como <strong>referencia internacional</strong>: a junio 2026 no se comercializa en
+      Argentina. Precios de nafta/híbrido de lista; mantenimiento y seguro son estimaciones de mercado.
+    </p>
+
+    <h3>Las tres rectas (con los datos de arriba)</h3>
+    <table>
+      <thead>
+        <tr><th>Auto</th><th>Ordenada (fijo)</th><th>Pendiente ($/km)</th><th>Costo a 75.000 km</th></tr>
+      </thead>
+      <tbody>
+        <tr><td class="t-nafta">Nafta</td><td class="num">$74.335.600</td><td class="num">142,1</td><td class="num">$84.994.900</td></tr>
+        <tr><td class="t-hibrido">Híbrido</td><td class="num">$76.458.250</td><td class="num">116,2</td><td class="num">$85.173.250</td></tr>
+        <tr><td class="t-electrico">Eléctrico</td><td class="num">$84.450.000</td><td class="num">38,8</td><td class="num">$87.360.000</td></tr>
+      </tbody>
+    </table>
+
+    <h2>2. El punto de equilibrio — ¿dónde se cruzan?</h2>
+    <p>Dos rectas se cruzan en los km totales donde cuestan lo mismo:</p>
+    <span class="fml-block">K* = (ordenada_B − ordenada_A) / (pendiente_A − pendiente_B)</span>
+    <p>Expresado en km/año (dividiendo por el horizonte de 5 años), los cruces son:</p>
+    <table>
+      <thead><tr><th>Cruce</th><th>km/año</th><th>Lectura</th></tr></thead>
+      <tbody>
+        <tr><td>Nafta ↔ Híbrido</td><td class="num">16.376</td><td style="text-align:left;color:var(--muted)">arriba de eso, el híbrido empieza a convenir sobre la nafta</td></tr>
+        <tr><td>Nafta ↔ Eléctrico</td><td class="num">19.578</td><td style="text-align:left;color:var(--muted)">arriba de eso, el eléctrico le gana a la nafta</td></tr>
+        <tr><td>Híbrido ↔ Eléctrico</td><td class="num">20.651</td><td style="text-align:left;color:var(--muted)">el eléctrico supera al híbrido recién acá</td></tr>
+      </tbody>
+    </table>
+    <div class="callout">
+      <div class="who" style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--faint)">A los 15.000 km/año de Martín gana el</div>
+      <div class="big t-nafta"><span class="dot c-nafta"></span>Nafta — $84.994.900</div>
+      <p style="margin:6px 0 0">Le gana al híbrido por <strong>$178.350</strong> en 5 años. Como Martín maneja menos que todos los cruces, el menor precio de compra de la nafta todavía pesa más que el ahorro de combustible.</p>
+    </div>
+
+    <h2>3. La capa exponencial — sensibilidad a la nafta</h2>
+    <p>
+      Si la nafta sube todos los años a una tasa <code>r</code>, su precio efectivo promedio sobre el horizonte es el
+      promedio de una progresión geométrica:
+    </p>
+    <span class="fml-block">nafta_efectiva = nafta₀ · promedio( (1 + r)^t ),  t = 0 … horizonte−1</span>
+    <p>
+      Subir la nafta inclina las rectas de la nafta y el híbrido (más pendiente) y <strong>baja el punto de cruce</strong>:
+      el eléctrico empieza a convenir antes. Con una suba del <strong>+50% anual</strong>, el cruce nafta↔eléctrico cae a
+      <strong>11.104 km/año</strong> (desde 19.578 con nafta estable). Por eso la decisión es tan sensible al combustible:
+      el <strong>mapa de decisión</strong> y el <strong>gráfico 3D</strong> muestran cómo se mueve esa frontera.
+    </p>
+
+    <h2>4. La capa financiera — cómo pagar la nafta</h2>
+    <p>
+      Martín tiene <strong>$30.000.000</strong> y el auto cuesta <strong>$55.944.000</strong>: le faltan
+      <strong>$25.944.000</strong> (el <em>gap</em>). Tres caminos:
+    </p>
+    <div class="grid2">
+      <div>
+        <h3>Crédito prendario (interés compuesto)</h3>
+        <p>Cuota del sistema francés con <code>i = TNA/12</code>:</p>
+        <span class="fml-block">cuota = gap · i / (1 − (1 + i)^(−n))</span>
+        <p>Con TNA 45% y 48 meses: cuota <strong>$1.173.346</strong>/mes, total <strong>$56.320.599</strong>. Paga
+        <strong>$30.376.599</strong> de intereses: un <strong>117%</strong> sobre lo que pidió.</p>
+      </div>
+      <div>
+        <h3>Esperar y ahorrar (plazo fijo vs inflación)</h3>
+        <p>Pone los $30M a plazo fijo (TNA 19%, capitalización mensual) un año → <strong>$36.223.530</strong>. Pero el
+        auto sube 15% → <strong>$64.335.600</strong>.</p>
+        <p>Resultado: el faltante en vez de achicarse <strong>crece a $28.112.070</strong>. En pesos, esperar no alcanza:
+        el auto corre más rápido que el plazo fijo.</p>
+      </div>
+    </div>
+    <p class="note">El <strong>contado</strong> (cuando se llega) es siempre lo más barato: no paga intereses ni pierde contra la inflación del auto.</p>
+
+    <h2>5. Reparto de la exposición</h2>
+    <div class="cards">
+      <div class="card">
+        <div class="who">Abre y modelo lineal</div>
+        <div class="name">Mateo</div>
+        <ul>
+          <li>Plantear el problema de Martín</li>
+          <li>Variables y datos del caso</li>
+          <li>Rectas C(K): ordenada vs pendiente</li>
+          <li>El gráfico y el punto de equilibrio K*</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="who">Exponencial y sensibilidad</div>
+        <div class="name">Enzo</div>
+        <ul>
+          <li>Suba de la nafta: (1+r)^t</li>
+          <li>Cómo se mueve el cruce</li>
+          <li>Mapa de decisión (km × inflación)</li>
+          <li>Gráfico 3D — superficies de costo</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="who">Finanzas y cierre</div>
+        <div class="name">Bautista</div>
+        <ul>
+          <li>El gap y la cuota francesa</li>
+          <li>Plazo fijo vs inflación del auto</li>
+          <li>Intereses como porcentaje (117%)</li>
+          <li>Conclusión y recomendación</li>
+        </ul>
+      </div>
+    </div>
+
+    <h2>6. La conclusión en una frase</h2>
+    <div class="callout">
+      <p class="lead" style="margin:0">
+        <strong>No hay un auto que gane siempre.</strong> Para Martín, que maneja poco, hoy conviene la
+        <span class="t-nafta">nafta</span>; si manejara más de ~16–20 mil km/año o si la nafta se dispara, pasa a
+        convenir el <span class="t-electrico">eléctrico</span>. Y para pagarlo, el contado le gana al crédito y a esperar.
+        Las funciones no son temas sueltos: viven juntas en una decisión real.
+      </p>
+    </div>
+
+    <footer>
+      Marco teórico: los 6 subprocesos de modelización de Blomhøj (formular, sistematizar, matematizar, analizar,
+      interpretar, validar). Datos verificados en junio 2026 — ver fuentes en la app. Toda la matemática deriva de
+      <code>lib/model.ts</code>; los números de esta guía salen del validador <code>npm run verify</code>.
+    </footer>
+  </div>
+</body>
+</html>
