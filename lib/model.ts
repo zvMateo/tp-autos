@@ -259,6 +259,45 @@ export function ganador(p: Params): Ganador {
 }
 
 // ----------------------------------------------------------------------------
+// Breakeven temporal: ¿en qué AÑO un auto recupera su sobreprecio de compra?
+// ----------------------------------------------------------------------------
+
+/**
+ * Costo anual de tener un auto: fijos (seguro + patente sobre el valor) +
+ * variables (energía/km + mantenimiento/km)·kmAnio. Es la pendiente temporal de
+ *   costoAcumulado(x, t) = precio_x + t · costoAnual(x)
+ *
+ * OJO — descomposición distinta a la recta vs-km C(K)=ordenada+pendiente·K: esa
+ * amortiza los fijos sobre TODO el horizonte y los mete en la ordenada (constantes
+ * respecto a K). Acá los fijos escalan año a año, que es lo correcto para un
+ * período de repago. Por eso el breakeven en años NO coincide exactamente con
+ * cruceKmTotales/kmAnio (ese cruce pertenece al modelo vs-km).
+ */
+export function costoAnual(p: Params, key: AutoKey): number {
+  const auto = p.autos[key];
+  const energiaPorKm = (auto.consumo / 100) * precioEnergiaEfectivo(p, auto.energia);
+  const fijos = auto.seguro + auto.precio * p.patentePct;
+  const variables = (energiaPorKm + auto.mantKm) * p.kmAnio;
+  return fijos + variables;
+}
+
+/**
+ * Años hasta que el auto `b` (normalmente el más caro de comprar) iguala el costo
+ * acumulado del auto `a`, al uso actual (kmAnio). Resuelve:
+ *   precio_a + t·anual_a = precio_b + t·anual_b
+ *   t* = (precio_b − precio_a) / (anual_a − anual_b)
+ * Devuelve null si no hay recupero a este uso (denominador ≤ 0 o t ≤ 0): el más
+ * caro de comprar nunca se paga manejando así.
+ */
+export function breakevenAnios(p: Params, a: AutoKey, b: AutoKey): number | null {
+  const sobreprecio = p.autos[b].precio - p.autos[a].precio;
+  const denom = costoAnual(p, a) - costoAnual(p, b);
+  if (denom <= 0) return null;
+  const t = sobreprecio / denom;
+  return t > 0 ? t : null;
+}
+
+// ----------------------------------------------------------------------------
 // Sensibilidad: cruce nafta ↔ eléctrico en función de la suba de la nafta
 // ----------------------------------------------------------------------------
 

@@ -13,6 +13,7 @@ import {
   calcularFinanzas,
   costoEnKm,
   ganador,
+  breakevenAnios,
   type AutoKey,
   type Params,
 } from "../lib/model.ts";
@@ -69,6 +70,7 @@ okRound("cruce Nafta↔Eléctrico", get("nafta", "electrico"), 31_250);
 okRound("cruce Nafta↔Híbrido", get("nafta", "hibrido"), 46_637);
 okRound("cruce Híbrido↔Eléctrico", get("hibrido", "electrico"), 15_438);
 okRound("sensibilidad nafta +50%", cruceNaftaElectricoKmAnio(fixture, 0.5)!, 11_104);
+ok("breakeven Nafta→Eléctrico (años)", breakevenAnios(fixture, "nafta", "electrico")!, 17.543859, 0.001);
 
 const f = calcularFinanzas(fixture);
 ok("cuota prendario", f.prendario.cuota, 361_809, 5);

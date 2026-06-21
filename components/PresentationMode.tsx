@@ -11,8 +11,10 @@ import { SlideGrafico } from "./slides/SlideGrafico";
 import { SlideSensibilidad } from "./slides/SlideSensibilidad";
 import { SlidePago } from "./slides/SlidePago";
 import { SlideConclusion } from "./slides/SlideConclusion";
+import { SlideLimites } from "./slides/SlideLimites";
 import { SlideFuentes } from "./slides/SlideFuentes";
 import { SlideMapa } from "./slides/SlideMapa";
+import { FaseBadge, faseDeSlide } from "./FaseBadge";
 import dynamic from "next/dynamic";
 
 // Lazy-load del slide 3D: three.js / R3F solo se descargan al entrar a esta slide.
@@ -37,6 +39,7 @@ const SLIDES: SlideDef[] = [
   { id: "mapa", label: "Mapa de decisión", Comp: ({ model }) => <SlideMapa model={model} /> },
   { id: "espacio", label: "El costo en 3D", Comp: ({ model }) => <SlideEspacio model={model} /> },
   { id: "pago", label: "Cómo lo paga", Comp: ({ model }) => <SlidePago model={model} /> },
+  { id: "limites", label: "Límites del modelo", Comp: () => <SlideLimites /> },
   { id: "conclusion", label: "Conclusión", Comp: ({ model }) => <SlideConclusion model={model} /> },
   { id: "fuentes", label: "Fuentes", Comp: () => <SlideFuentes /> },
 ];
@@ -94,6 +97,9 @@ export function PresentationMode({ model }: { model: UseModel }) {
         />
       </div>
       <div className="relative min-h-0 flex-1">
+        <div className="pointer-events-none absolute right-3 top-3 z-20 sm:right-6 sm:top-4">
+          <FaseBadge fase={faseDeSlide(current.id)} />
+        </div>
         <AnimatePresence mode="wait" custom={dir} initial={false}>
           <motion.div
             key={current.id}

@@ -1,7 +1,7 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { AUTO_KEYS } from "@/lib/model";
+import { AUTO_KEYS, type Params } from "@/lib/model";
 import { AUTO_UI } from "@/lib/autos";
 import type { UseModel } from "@/lib/useModel";
 import { NumberField } from "./ui/NumberField";
@@ -16,9 +16,16 @@ function Section({ title, children }: { title: string; children: ReactNode }) {
   );
 }
 
+/** Escenarios de un toque: setean params clave para explorar sin mover sliders a ciegas. */
+const PRESETS: { label: string; partial: Partial<Params> }[] = [
+  { label: "Uso urbano", partial: { kmAnio: 8000 } },
+  { label: "Repartidor", partial: { kmAnio: 40000 } },
+  { label: "Nafta por las nubes", partial: { subaNaftaAnual: 0.4 } },
+];
+
 /** Panel de parámetros editables. Todo recalcula la app en vivo. */
 export function ParametersPanel({ model }: { model: UseModel }) {
-  const { params, set, setAuto, reset, modificado } = model;
+  const { params, set, setAuto, aplicarPreset, reset, modificado } = model;
 
   return (
     <div className="rounded-2xl border border-line bg-surface p-5 shadow-sm">
@@ -33,9 +40,23 @@ export function ParametersPanel({ model }: { model: UseModel }) {
           Restaurar referencia
         </button>
       </div>
-      <p className="mb-4 rounded-lg bg-surface-2 px-3 py-2 text-[11px] leading-snug text-faint">
+      <p className="mb-3 rounded-lg bg-surface-2 px-3 py-2 text-[11px] leading-snug text-faint">
         Datos reales de Córdoba (junio 2026), verificados con fuentes — ver la diapositiva «Fuentes».
       </p>
+
+      <div className="mb-4 flex flex-wrap gap-2">
+        <span className="w-full text-[11px] font-semibold uppercase tracking-wider text-faint">Escenarios</span>
+        {PRESETS.map((p) => (
+          <button
+            key={p.label}
+            type="button"
+            onClick={() => aplicarPreset(p.partial)}
+            className="rounded-full border border-line px-3 py-1 text-xs font-medium text-muted transition-colors hover:border-accent hover:text-accent"
+          >
+            {p.label}
+          </button>
+        ))}
+      </div>
 
       <Section title="Uso y energía">
         <NumberField
