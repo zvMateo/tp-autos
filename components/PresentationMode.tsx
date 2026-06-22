@@ -15,6 +15,7 @@ import { SlideLimites } from "./slides/SlideLimites";
 import { SlideFuentes } from "./slides/SlideFuentes";
 import { SlideMapa } from "./slides/SlideMapa";
 import { SlidePython } from "./slides/SlidePython";
+import { SlideFunciones } from "./slides/SlideFunciones";
 import { FaseBadge, faseDeSlide } from "./FaseBadge";
 import dynamic from "next/dynamic";
 
@@ -32,6 +33,7 @@ interface SlideDef {
 
 const SLIDES: SlideDef[] = [
   { id: "portada", label: "Portada", Comp: () => <SlidePortada /> },
+  { id: "funciones", label: "¿Qué son las funciones?", Comp: () => <SlideFunciones /> },
   { id: "problema", label: "El problema", Comp: ({ model }) => <SlideProblema model={model} /> },
   { id: "variables", label: "Las variables", Comp: ({ model }) => <SlideVariables model={model} /> },
   { id: "matematica", label: "La matemática", Comp: ({ model }) => <SlideMatematica model={model} /> },

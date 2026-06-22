@@ -31,6 +31,7 @@ const FASE_LABEL: Record<Fase, string> = {
  */
 const FASE_POR_SLIDE: Record<string, Fase | null> = {
   portada: null,
+  funciones: null,
   problema: "formular",
   variables: "sistematizar",
   matematica: "matematizar",
