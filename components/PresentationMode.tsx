@@ -14,6 +14,7 @@ import { SlideConclusion } from "./slides/SlideConclusion";
 import { SlideLimites } from "./slides/SlideLimites";
 import { SlideFuentes } from "./slides/SlideFuentes";
 import { SlideMapa } from "./slides/SlideMapa";
+import { SlidePython } from "./slides/SlidePython";
 import { FaseBadge, faseDeSlide } from "./FaseBadge";
 import dynamic from "next/dynamic";
 
@@ -42,6 +43,7 @@ const SLIDES: SlideDef[] = [
   { id: "limites", label: "Límites del modelo", Comp: () => <SlideLimites /> },
   { id: "conclusion", label: "Conclusión", Comp: ({ model }) => <SlideConclusion model={model} /> },
   { id: "fuentes", label: "Fuentes", Comp: () => <SlideFuentes /> },
+  { id: "python", label: "Puente a Python", Comp: ({ model }) => <SlidePython model={model} /> },
 ];
 
 const variants = {

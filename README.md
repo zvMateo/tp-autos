@@ -3,7 +3,7 @@
 Aplicación web interactiva para exponer en clase el TP de modelización: **qué auto comprar
 (nafta / híbrido / eléctrico) según cuánto se maneje, y cómo pagarlo**. Tiene dos modos:
 
-- **Presentación** — 12 slides a pantalla completa (incluye «Fuentes y confiabilidad»), navegables con el teclado (←/→/Espacio).
+- **Presentación** — 13 slides a pantalla completa (incluye «Fuentes y confiabilidad» y «Puente a Python»), navegables con el teclado (←/→/Espacio).
 - **Calculadora** — dashboard con sliders que recalculan todos los gráficos y resultados en vivo.
 
 Toda la matemática vive en `lib/model.ts` (fuente de verdad). Nada se hardcodea en la UI:
@@ -80,7 +80,7 @@ lib/            model.ts (fuente de verdad) · format.ts · autos.ts · useModel
 components/     CalculatorMode · PresentationMode · paneles · CarCard
 components/ui/  Slider · NumberField · CountUp · ModeToggle
 components/charts/  CostLinesChart (G1) · SensitivityChart (G2) · FinanceChart (G3)
-components/slides/  las 12 slides + SlideFrame
+components/slides/  las 13 slides + SlideFrame
 lib/sources.ts  fuentes + confianza por dato (alimenta la slide «Fuentes»)
 SOURCES.md      tabla de fuentes para revisión
 scripts/        verify-model.mts (asserts contra la tabla del brief)

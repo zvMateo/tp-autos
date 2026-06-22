@@ -73,17 +73,17 @@
   Estudiá la defensa teórica más que el guion. Cada uno domina su sección; los números finales los sabemos los tres.
 </div>
 
-<h2>División de slides (12 diapositivas)</h2>
+<h2>División de slides (13 diapositivas)</h2>
 <table>
   <thead><tr><th>Slides</th><th>Integrante</th><th>Tema</th><th>Familias de función</th></tr></thead>
   <tbody>
     <tr><td>1–5 · Portada · Problema · Variables · Matemática · Gráfico y cruce</td><td><span class="pill pill-mateo">Mateo</span></td><td>El caso + modelo lineal + punto de equilibrio</td><td>Lineal · Equilibrio</td></tr>
     <tr><td>6–8 · Sensibilidad · Mapa de decisión · Costo en 3D</td><td><span class="pill pill-enzo">Enzo</span></td><td>Suba de nafta y de luz + sensibilidad + %</td><td>Exponencial · Porcentajes</td></tr>
     <tr><td>9, 10 y 12 · Cómo lo paga · Lo que el modelo no captura · Fuentes</td><td><span class="pill pill-bauti">Bautista</span></td><td>Pago + límites + validación + Blomhøj</td><td>Interés compuesto</td></tr>
-    <tr><td>11 · Conclusión</td><td><span class="pill pill-eq">Equipo</span></td><td>Cierre: una línea cada uno</td><td>—</td></tr>
+    <tr><td>11 y 13 · Conclusión · Puente a Python</td><td><span class="pill pill-eq">Equipo</span></td><td>Cierre: una línea cada uno + la misma matemática en Python</td><td>Síntesis · puente</td></tr>
   </tbody>
 </table>
-<p class="note">Tiempos (~12–15 min): Mateo 5′ · Enzo 4′ · Bautista 4′ · Cierre 1–2′.</p>
+<p class="note">Tiempos (~14–16 min): Mateo 5′ · Enzo 4′ · Bautista 4′ · Cierre + puente 2–3′.</p>
 
 <!-- ===================== MATEO ===================== -->
 <div class="section">
@@ -221,11 +221,12 @@ Plazo fijo: capital_final = ahorro · (1 + TNA/12)^meses  (TNA 19%)
 
 <!-- ===================== CIERRE + CHULETA + BANCO + CHECKLIST ===================== -->
 <div class="section">
-<h2><span class="pill pill-eq">Equipo</span> Cierre — Slide 11 (Conclusión)</h2>
+<h2><span class="pill pill-eq">Equipo</span> Cierre — Slides 11 y 13 (Conclusión + Puente a Python)</h2>
 <div class="say"><strong>Mateo:</strong> "A 15.000 km/año, hoy le conviene el <strong>nafta</strong> —gana por poco—."</div>
 <div class="say"><strong>Enzo:</strong> "Pero si manejara más de ~20.200 km/año, o si la nafta se dispara, conviene el <strong>eléctrico</strong> —y se sostiene aunque también suba la luz—."</div>
 <div class="say"><strong>Bautista:</strong> "Para pagarlo: contado es lo más barato, el prendario suma 117% de intereses, y esperar no alcanza."</div>
 <div class="say"><strong>Cierre:</strong> "Las funciones no son temas sueltos: <strong>viven dentro de una decisión real</strong>."</div>
+<p class="note"><strong>Slide 13 — Puente a Python:</strong> cerramos mostrando las mismas fórmulas escritas en Python (el detalle está en la sección 🐍 más abajo). Mensaje: la matemática es la misma, cambia solo el lenguaje — y nos enlaza con la próxima unidad de la materia.</p>
 
 <h2> fórmulas</h2>
 <table>
@@ -346,6 +347,202 @@ nafta↔eléctrico: (84.450.000 − 74.335.600) / (142,1 − 42,0) ≈ 101.000 k
   </tbody>
 </table>
 <p class="note"><strong>El hilo, en una frase:</strong> convertimos una decisión real en tres rectas (lineal), encontramos dónde se cruzan (sistema de ecuaciones), le sumamos la suba de las dos energías (exponencial) y el costo de financiarla (interés compuesto), y mostramos que la respuesta depende de cuánto se maneja y es robusta aunque suban los precios — recorriendo el ciclo de Blomhøj.</p>
+</div>
+
+<!-- ===================== DEL PLAN AL PROYECTO ===================== -->
+<div class="section">
+<h2>🔄 Del plan al proyecto: por qué quedó más completo</h2>
+<p>El trabajo arrancó de un plan (la idea de los 3 autos + la decisión financiera). El proyecto cerrado lo <strong>cumple y lo supera</strong>. Esta comparación deja claro qué cambió y por qué hoy es más completo.</p>
+<table>
+  <thead><tr><th>Lo que decía el plan</th><th>Lo que quedó implementado</th></tr></thead>
+  <tbody>
+    <tr><td>3 rectas + punto de equilibrio</td><td>Igual, y con <strong>tabla de pares ordenados</strong> visible</td></tr>
+    <tr><td>Suba futura de nafta <em>y</em> tarifa EPEC</td><td>Al principio <strong>solo subía la nafta</strong> (la luz fija). En el cierre se agregó la <strong>suba de la luz</strong> → ahora suben las dos</td></tr>
+    <tr><td>Análisis de sensibilidad (suba de nafta)</td><td>Sensibilidad <strong>de dos variables</strong> (nafta y luz), con efectos <strong>opuestos</strong> sobre el cruce</td></tr>
+    <tr><td>Depreciación → exponencial decreciente</td><td><span class="bad">No se modeló</span>: quedó como <strong>limitación declarada</strong> (slide "Lo que el modelo no captura")</td></tr>
+    <tr><td>Crédito prendario + plazo fijo + % (patente/seguro)</td><td>Igual (interés compuesto + porcentajes)</td></tr>
+    <tr><td>Validación con datos reales</td><td>Igual, con <strong>niveles de confianza</strong> por dato (alta/media/baja)</td></tr>
+    <tr><td>— (no estaba en el plan)</td><td><strong>Breakeven en años</strong> + <strong>slide de límites</strong> + badge del ciclo de Blomhøj por slide</td></tr>
+  </tbody>
+</table>
+<div class="callout">
+  <strong>La diferencia de fondo:</strong> el plan tenía <strong>una sola capa exponencial</strong> (la nafta) y trataba la luz como un número fijo. Ahora <strong>las dos energías son exponenciales</strong>, con la misma fórmula. Eso convirtió un análisis de sensibilidad de <strong>una</strong> variable en uno de <strong>dos</strong> que empujan el resultado en sentidos contrarios → más completo <em>y</em> más honesto: la conclusión ya no depende de "congelar" la luz.
+</div>
+<h3 class="bad">⚠️ Números viejos del plan que NO hay que decir</h3>
+<p>El plan tiraba números tentativos. Los <strong>reales</strong> (verificados con <code>npm run verify</code>) son otros. En la defensa van estos:</p>
+<table>
+  <thead><tr><th>El plan decía…</th><th>El modelo real dice…</th></tr></thead>
+  <tbody>
+    <tr><td>equilibrio ~12.000 km/año</td><td class="t-electrico"><strong>20.200 km/año</strong></td></tr>
+    <tr><td>"se paga solo en 4 años"</td><td class="t-electrico"><strong>7,9 años</strong> (más que los 5 del horizonte)</td></tr>
+    <tr><td>nafta +100% → equilibrio 7.000 km</td><td class="t-electrico"><strong>2.658 km/año</strong></td></tr>
+  </tbody>
+</table>
+</div>
+
+<!-- ===================== FACTOR DE CAPITALIZACIÓN ===================== -->
+<div class="section">
+<h2>📈 El factor de capitalización, paso a paso (Enzo)</h2>
+<p>Es el concepto más fino del trabajo: une la <strong>exponencial</strong> (la energía que sube) con las <strong>rectas</strong> (que necesitan un solo precio). Hay que dominarlo.</p>
+
+<h3>El problema que resuelve</h3>
+<p>Si la nafta sube cada año, <strong>no pagás el mismo precio los 5 años</strong>. Con una suba del 50% anual, partiendo de $2.084:</p>
+<div class="fml">año 0:  $2.084              (precio base)
+año 1:  $2.084 · (1,5)¹  = $3.126
+año 2:  $2.084 · (1,5)²  = $4.689
+año 3:  $2.084 · (1,5)³  = $7.034
+año 4:  $2.084 · (1,5)⁴  = $10.550</div>
+<p>Pero el modelo necesita <strong>una sola recta por auto</strong> → <strong>un solo precio</strong>. ¿Cuál usamos? El <strong>promedio</strong> de los 5 años. El factor de capitalización es ese promedio, escrito como "cuántas veces el precio base".</p>
+
+<h3>La fórmula y el cálculo</h3>
+<div class="fml">factor(r, H) = (1/H) · [ (1+r)⁰ + (1+r)¹ + (1+r)² + … + (1+r)^(H−1) ]
+
+Con r = 50% y H = 5:
+multiplicadores:  1 + 1,5 + 2,25 + 3,375 + 5,0625 = 13,1875
+factor = 13,1875 / 5 = 2,6375
+→ nafta efectiva = $2.084 · 2,6375 = $5.496/L  (el precio "promedio" de los 5 años)</div>
+
+<h3>Casos para tener claros</h3>
+<ul>
+  <li><strong>Sin suba (r = 0):</strong> el factor da <span class="mono">(1+1+1+1+1)/5 = 1</span> → el precio efectivo es el de hoy. Lógico.</li>
+  <li><strong>Cuanto más alta la suba,</strong> más grande el factor → más empinada la recta del nafta → el cruce <strong>baja</strong> (al eléctrico le conviene antes).</li>
+</ul>
+
+<h3>Para derivarlo a mano (suma una progresión geométrica)</h3>
+<p>Esa suma es una <strong>progresión geométrica</strong> de razón <span class="mono">(1+r)</span>. Su fórmula cerrada:</p>
+<div class="fml">Σ (1+r)^t  (t = 0 … H−1)  =  ((1+r)^H − 1) / r
+→ factor = ((1+r)^H − 1) / (r · H)
+
+Verificación (r = 0,5 ; H = 5):  (1,5⁵ − 1)/(0,5·5) = 6,59375/2,5 = 2,6375 ✓</div>
+
+<div class="callout">
+  <strong>Lo nuevo del cierre:</strong> esta misma fórmula ahora se aplica <strong>también a la luz</strong> (con su propia suba). Antes era solo para la nafta — por eso en el código pasó de <span class="mono">factorNaftaEfectivo</span> a <span class="mono">factorCapitalización</span>: una sola herramienta para las dos energías.
+</div>
+<p class="note"><strong>Simplificación a declarar:</strong> usar el promedio supone que Martín reparte los km parejo en los 5 años. Es a propósito, para mantener el modelo en rectas. Decirlo nosotros = puntos.</p>
+</div>
+
+<!-- ===================== DEFINICIONES + POR INTEGRANTE ===================== -->
+<div class="section">
+<h2>🧩 Definiciones intuitivas + qué domina cada integrante</h2>
+
+<h3>Definiciones en criollo (entenderlas, no memorizarlas)</h3>
+<ul>
+  <li><strong>Recta de costo C(K):</strong> "¿cuánto me sale en total tener este auto si manejo K km?". Es recta porque cada km extra suma <strong>siempre lo mismo</strong>.</li>
+  <li><strong>Ordenada (lo fijo):</strong> lo que pagás <strong>aunque el auto no se mueva</strong> (compra + seguro + patente). En el gráfico, <strong>dónde arranca</strong> la recta.</li>
+  <li><strong>Pendiente (lo variable):</strong> lo que cuesta <strong>cada km</strong> (energía + mantenimiento). En el gráfico, <strong>cuán empinada</strong> está. El eléctrico es casi plano (42 $/km); el nafta, empinado (142 $/km).</li>
+  <li><strong>Punto de equilibrio K*:</strong> el kilometraje donde <strong>dos autos cuestan lo mismo</strong>. El eléctrico arranca arriba pero sube despacio; el nafta arranca abajo pero sube rápido → se cruzan.</li>
+  <li><strong>Exponencial:</strong> un precio que sube <strong>un % sobre lo del año anterior</strong> (no una cantidad fija): crece cada vez más rápido.</li>
+  <li><strong>Interés compuesto:</strong> los intereses <strong>se suman al capital y generan nuevos intereses</strong> ("interés sobre interés").</li>
+</ul>
+
+<h3><span class="pill pill-mateo">Mateo</span> Función LINEAL + punto de equilibrio (slides 1–5)</h3>
+<div class="fml">C(K) = ordenada + pendiente · K
+  ordenada  = precio + H·(seguro + precio·patente%)      ← lo fijo
+  pendiente = (consumo/100)·precio_energía + mant/km      ← lo variable
+K* = (ordenada_B − ordenada_A) / (pendiente_A − pendiente_B)   ← el cruce</div>
+<p><strong>Tenés que poder:</strong> dibujar dos rectas, decir cuál es ordenada y cuál pendiente, e <strong>igualarlas para despejar K*</strong>. Número clave: cruce nafta↔eléctrico = <strong>20.200 km/año</strong>.</p>
+
+<h3><span class="pill pill-enzo">Enzo</span> Función EXPONENCIAL + factor de capitalización + porcentajes (slides 6–8)</h3>
+<div class="fml">precio_energía(t) = precio₀ · (1 + r)^t            ← exponencial
+factor = (1/H)·Σ(1+r)^t = ((1+r)^H − 1)/(r·H)      ← el promedio (lámina anterior)
+parte = base · porcentaje                           ← patente, intereses, inflación</div>
+<p><strong>Tenés que poder:</strong> explicar <strong>por qué exponencial y no lineal</strong>, calcular el factor a mano (2,6375), y decir el efecto de cada suba: la nafta <strong>baja</strong> el cruce (+50% → 6.561), la luz lo <strong>sube</strong> (+50% → 47.193). Esa oposición es el momento "wow".</p>
+
+<h3><span class="pill pill-bauti">Bautista</span> INTERÉS COMPUESTO (slides 9, 10 y 12)</h3>
+<div class="fml">gap = precio − ahorro = 55.944.000 − 30.000.000 = 25.944.000
+
+Crédito (sistema francés):  cuota = gap · i / (1 − (1+i)^(−n)),  i = TNA/12
+  → 45%/12 = 3,75% mensual, n = 48 → cuota $1.173.346, total $56,3M, intereses 117%
+
+Plazo fijo (capitalización):  C_final = C · (1 + TNA/12)^meses
+  → 30M al 19% a 1 año ≈ $36,2M, pero el auto sube a $64,3M → esperar no alcanza</div>
+<p><strong>Tenés que poder:</strong> explicar <strong>interés simple vs compuesto</strong>, por qué la cuota francesa es interés compuesto, por qué <strong>esperar no conviene</strong> (el auto sube partiendo de un valor mucho más alto que el ahorro), y nombrar los <strong>límites</strong> (no modelamos la reventa).</p>
+
+<div class="callout"><strong>Regla de oro:</strong> cada uno tiene que poder <strong>derivar su fórmula a mano</strong>. La app impresiona, pero el 10 se gana explicando la matemática sin la pantalla.</div>
+</div>
+
+<!-- ===================== DIÁLOGOS PARA LA PRESENTACIÓN ===================== -->
+<div class="section">
+<h2>🎙️ Diálogos para la presentación (un parlamento por integrante)</h2>
+<p>Texto natural para decir al abrir y al pasar de una parte a la otra. <strong>Complementa</strong> el guion slide por slide: esto es para sonar fluidos, no para leer literal. Cada uno arma el suyo con sus palabras.</p>
+
+<h3><span class="pill pill-mateo">Mateo</span> — apertura y el concepto de las rectas</h3>
+<div class="say">"Buenas a todos. Nuestro trabajo arranca de una pregunta que cualquiera se hace antes de comprar un auto: <strong>¿el más barato de comprar es el más barato de tener?</strong> Tomamos el caso de Martín, de Córdoba, que maneja 15.000 km al año y duda entre un nafta, un híbrido y un eléctrico. Lo que hicimos fue convertir el costo de cada auto en una <strong>recta</strong>: arranca en lo que pagás fijo —la compra, el seguro, la patente— y sube según lo que gastás por kilómetro. Tres autos, tres rectas. Y como tienen distinta altura de arranque y distinta inclinación, <strong>se cruzan</strong> — y ese cruce es el corazón de todo el trabajo."</div>
+
+<h3><span class="pill pill-enzo">Enzo</span> — el momento en que todo se mueve</h3>
+<div class="say">"Lo que mostró Mateo vale para los precios de hoy, pero los precios no se quedan quietos: la nafta y la luz suben todos los años un porcentaje, y eso es una <strong>función exponencial</strong>. Acá está lo interesante: si sube la nafta, su recta se inclina y al eléctrico le conviene mucho antes; pero si sube la luz, pasa lo contrario, porque la luz es el combustible del eléctrico. Las dos energías mueven el punto de equilibrio <strong>en sentidos opuestos</strong>. Por eso no congelamos ninguna: las dejamos como dos perillas y mostramos en vivo cómo cambia la decisión. Eso es el <strong>análisis de sensibilidad</strong> que pide la consigna."</div>
+
+<h3><span class="pill pill-bauti">Bautista</span> — cómo pagarlo y la honestidad</h3>
+<div class="say">"Ya sabemos qué auto; falta lo que a todos nos importa: <strong>cómo pagarlo</strong>. A Martín le faltan 26 millones. Si saca un crédito prendario, termina pagando un <strong>117% de intereses</strong> sobre lo que pidió —ahí está el interés compuesto—. Si decide esperar y ahorrar en un plazo fijo, el auto sube más rápido de lo que rinde su plata, así que esperar no lo acerca. Y cerramos con honestidad: hay cosas que dejamos afuera, como el valor de reventa, y lo decimos <strong>nosotros</strong> antes de que pregunten. Validamos cada dato con su fuente y su nivel de confianza: no inventamos números, recorrimos todo el ciclo de modelización."</div>
+</div>
+
+<!-- ===================== EL MODELO EN PYTHON ===================== -->
+<div class="section">
+<h2>🐍 Cómo se implementaría en Python (puente a la próxima unidad)</h2>
+<div class="callout">
+  <strong>Aclaración honesta:</strong> la app está programada en <strong>TypeScript</strong> (no en Python). Estas son <strong>las mismas fórmulas escritas en Python</strong>, como se verían en la unidad de Python de la materia. No es que el TP esté hecho en Python: es la <strong>traducción</strong> del modelo, para mostrar que la matemática es la misma en cualquier lenguaje.
+</div>
+
+<h3>El núcleo del modelo (las rectas y el cruce)</h3>
+<div class="fml">def factor_capitalizacion(r, h):
+    """Promedio de (1+r)^t sobre el horizonte. r=0 -> 1 (sin suba)."""
+    return sum((1 + r) ** t for t in range(h)) / h
+
+def precio_energia_efectivo(precio_base, suba_anual, horizonte):
+    # exponencial promediada: vale para la nafta y para la luz
+    return precio_base * factor_capitalizacion(suba_anual, horizonte)
+
+def ordenada(precio, horizonte, seguro, patente_pct):
+    # lo FIJO: compra + (seguro + patente) por cada año
+    return precio + horizonte * (seguro + precio * patente_pct)
+
+def pendiente(consumo, precio_energia, mant_km):
+    # lo VARIABLE por km: energia/km + mantenimiento/km
+    return (consumo / 100) * precio_energia + mant_km
+
+def costo_total(ordenada, pendiente, km_anio, horizonte):
+    # C(K) = ordenada + pendiente * K,  con K = km totales
+    return ordenada + pendiente * (km_anio * horizonte)
+
+def cruce_km_anio(ord_a, pend_a, ord_b, pend_b, horizonte):
+    """Km/año donde dos rectas se igualan. None si son paralelas."""
+    if pend_a == pend_b:
+        return None
+    km_totales = (ord_b - ord_a) / (pend_a - pend_b)
+    return km_totales / horizonte</div>
+
+<h3>La capa financiera (interés compuesto)</h3>
+<div class="fml">def cuota_francesa(gap, tna, meses):
+    # sistema francés (cuota fija) = interés compuesto
+    i = tna / 12
+    return gap * i / (1 - (1 + i) ** (-meses))
+
+def plazo_fijo(capital, tna, meses):
+    # capitalización mensual
+    return capital * (1 + tna / 12) ** meses</div>
+
+<h3>Ejemplo: reproduce los números del auto nafta</h3>
+<div class="fml"># datos reales del nafta (Corolla Cross 2.0), jun 2026
+b = ordenada(precio=55_944_000, horizonte=5, seguro=2_000_000, patente_pct=0.03)
+m = pendiente(consumo=6.1, precio_energia=2084, mant_km=15)
+print(b, m)                       # 74335600  142.124
+print(costo_total(b, m, 15000, 5))  # 84994900  -> lo que le cuesta a Martín
+
+# cruce nafta (b=74_335_600, m=142.1) vs eléctrico (b=84_450_000, m=42.0)
+print(cruce_km_anio(74_335_600, 142.124, 84_450_000, 41.98, 5))  # ~20200</div>
+
+<h3>Qué familia de función es cada una</h3>
+<table>
+  <thead><tr><th>Función Python</th><th>Familia / concepto</th></tr></thead>
+  <tbody>
+    <tr><td class="mono">ordenada / pendiente / costo_total</td><td>Función lineal C(K) = b + m·K</td></tr>
+    <tr><td class="mono">cruce_km_anio</td><td>Sistema de ecuaciones (intersección de rectas)</td></tr>
+    <tr><td class="mono">factor_capitalizacion / precio_energia_efectivo</td><td>Exponencial + promedio de progresión geométrica</td></tr>
+    <tr><td class="mono">cuota_francesa / plazo_fijo</td><td>Interés compuesto</td></tr>
+    <tr><td class="mono">patente = precio * patente_pct</td><td>Porcentaje</td></tr>
+  </tbody>
+</table>
+<p class="note">Si en la unidad de Python lo reescriben, pueden correr estas funciones tal cual: devuelven exactamente los números de la app (la app las tiene en TypeScript, que hace la misma cuenta).</p>
 </div>
 
 </body>
