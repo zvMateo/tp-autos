@@ -21,6 +21,7 @@ const PRESETS: { label: string; partial: Partial<Params> }[] = [
   { label: "Uso urbano", partial: { kmAnio: 8000 } },
   { label: "Repartidor", partial: { kmAnio: 40000 } },
   { label: "Nafta por las nubes", partial: { subaNaftaAnual: 0.4 } },
+  { label: "Luz por las nubes", partial: { subaLuzAnual: 0.32 } },
 ];
 
 /** Panel de parámetros editables. Todo recalcula la app en vivo. */
@@ -108,8 +109,20 @@ export function ParametersPanel({ model }: { model: UseModel }) {
           unit={0.01}
           suffix="%/año"
           color="var(--car-nafta)"
-          hint="Mueve las rectas y el punto de cruce"
+          hint="Encarece el km del nafta: baja el cruce"
           onChange={(v) => set("subaNaftaAnual", v)}
+        />
+        <NumberField
+          label="Suba anual de la luz (EPEC)"
+          value={params.subaLuzAnual}
+          min={0}
+          max={100}
+          step={5}
+          unit={0.01}
+          suffix="%/año"
+          color="var(--car-electrico)"
+          hint="Encarece el km del eléctrico: sube el cruce"
+          onChange={(v) => set("subaLuzAnual", v)}
         />
         <NumberField
           label="Patente"

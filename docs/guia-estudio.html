@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Guía de estudio y defensa — ¿Qué auto conviene?</title>
+<style>
+  :root {
+    --ink: #1a1a1a; --muted: #555; --faint: #888; --line: #ddd;
+    --nafta: #c0392b; --hibrido: #b8860b; --electrico: #1e8449; --accent: #2b6cb0;
+    --bg-soft: #f6f6f4;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  body {
+    font-family: "Segoe UI", system-ui, -apple-system, sans-serif;
+    color: var(--ink); line-height: 1.5; max-width: 880px; margin: 0 auto; padding: 2rem 1.5rem;
+    font-size: 15px;
+  }
+  h1 { font-size: 2rem; margin: 0 0 .2rem; }
+  h2 { font-size: 1.35rem; margin: 1.6rem 0 .6rem; padding-bottom: .25rem; border-bottom: 2px solid var(--line); }
+  h3 { font-size: 1.05rem; margin: 1.1rem 0 .4rem; }
+  p { margin: .5rem 0; }
+  ul { margin: .4rem 0 .4rem 1.1rem; padding: 0; }
+  li { margin: .25rem 0; }
+  code, .mono { font-family: "Consolas", "SF Mono", ui-monospace, monospace; }
+  .fml { font-family: "Consolas", ui-monospace, monospace; background: var(--bg-soft); border: 1px solid var(--line);
+    border-radius: 6px; padding: .6rem .8rem; white-space: pre-wrap; font-size: .9em; margin: .5rem 0; }
+  table { border-collapse: collapse; width: 100%; margin: .6rem 0; font-size: .92em; }
+  th, td { border: 1px solid var(--line); padding: .35rem .55rem; text-align: left; }
+  th { background: var(--bg-soft); font-weight: 600; }
+  td.num, th.num { text-align: right; font-family: "Consolas", ui-monospace, monospace; }
+  .t-nafta { color: var(--nafta); font-weight: 600; }
+  .t-hibrido { color: var(--hibrido); font-weight: 600; }
+  .t-electrico { color: var(--electrico); font-weight: 600; }
+  .meta { color: var(--muted); margin: .15rem 0; }
+  .say { background: #fbfbf9; border-left: 3px solid var(--accent); padding: .5rem .85rem; margin: .5rem 0;
+    border-radius: 0 6px 6px 0; }
+  .qa { margin: .2rem 0; }
+  .qa b { color: var(--ink); }
+  .callout { background: var(--bg-soft); border: 1px solid var(--line); border-radius: 8px; padding: .75rem 1rem; margin: .7rem 0; }
+  .pill { display: inline-block; font-size: .72rem; font-weight: 700; text-transform: uppercase; letter-spacing: .05em;
+    padding: .12rem .5rem; border-radius: 999px; }
+  .pill-mateo { background: #e6f0fb; color: var(--accent); }
+  .pill-enzo { background: #fdf0e3; color: var(--hibrido); }
+  .pill-bauti { background: #e6f3ec; color: var(--electrico); }
+  .pill-eq { background: #efeef0; color: #555; }
+  .note { color: var(--muted); font-size: .88em; }
+  .ok { color: var(--electrico); } .warn { color: var(--hibrido); } .bad { color: var(--nafta); }
+  hr { border: none; border-top: 1px solid var(--line); margin: 1.4rem 0; }
+  .section { page-break-before: always; }
+  @media print {
+    body { padding: 0; font-size: 11.5pt; max-width: none; }
+    h1 { font-size: 20pt; } h2 { font-size: 15pt; } h3 { font-size: 12pt; }
+    a { color: var(--accent); text-decoration: none; }
+    .no-print { display: none; }
+  }
+  @page { size: A4; margin: 1.5cm; }
+</style>
+</head>
+<body>
+
+<header>
+  <h1>¿Qué auto conviene y cómo pagarlo?</h1>
+  <p class="meta">Guía de estudio y defensa — Final de Modelización Matemática (Funciones)</p>
+  <p class="meta"><strong>Integrantes:</strong> Mateo Zavala · Enzo Gaido · Bautista Defago &nbsp;·&nbsp; <strong>Exposición:</strong> 23/06/2026</p>
+  <p class="meta"><strong>App:</strong> tp-autos.vercel.app (modo Presentación + Calculadora) &nbsp;·&nbsp; 12 slides</p>
+  <p class="note no-print">📄 Para generar el PDF: abrí este archivo en el navegador y usá <strong>Ctrl/Cmd + P → Guardar como PDF</strong> (activá «Gráficos de fondo»).</p>
+</header>
+
+<div class="callout">
+  <strong>Regla de oro:</strong> la app impresiona, pero el 10 se gana cuando podés explicar la matemática <strong>sin la app</strong>, a mano.
+  Estudiá la defensa teórica más que el guion. Cada uno domina su sección; los números finales los sabemos los tres.
+</div>
+
+<h2>División de slides (12 diapositivas)</h2>
+<table>
+  <thead><tr><th>Slides</th><th>Integrante</th><th>Tema</th><th>Familias de función</th></tr></thead>
+  <tbody>
+    <tr><td>1–5 · Portada · Problema · Variables · Matemática · Gráfico y cruce</td><td><span class="pill pill-mateo">Mateo</span></td><td>El caso + modelo lineal + punto de equilibrio</td><td>Lineal · Equilibrio</td></tr>
+    <tr><td>6–8 · Sensibilidad · Mapa de decisión · Costo en 3D</td><td><span class="pill pill-enzo">Enzo</span></td><td>Suba de nafta y de luz + sensibilidad + %</td><td>Exponencial · Porcentajes</td></tr>
+    <tr><td>9, 10 y 12 · Cómo lo paga · Lo que el modelo no captura · Fuentes</td><td><span class="pill pill-bauti">Bautista</span></td><td>Pago + límites + validación + Blomhøj</td><td>Interés compuesto</td></tr>
+    <tr><td>11 · Conclusión</td><td><span class="pill pill-eq">Equipo</span></td><td>Cierre: una línea cada uno</td><td>—</td></tr>
+  </tbody>
+</table>
+<p class="note">Tiempos (~12–15 min): Mateo 5′ · Enzo 4′ · Bautista 4′ · Cierre 1–2′.</p>
+
+<!-- ===================== MATEO ===================== -->
+<div class="section">
+<h2><span class="pill pill-mateo">Mateo</span> Slides 1 a 5 — la columna vertebral</h2>
+<p>Planteás el problema y mostrás <strong>por qué cada auto es una recta y por qué se cruzan</strong>. Si esto queda claro, el resto se sostiene.</p>
+
+<h3>🗣️ Lo que decís</h3>
+<div class="say"><strong>(1 · Portada)</strong> "Nuestro trabajo se llama <em>¿Qué auto conviene y cómo pagarlo?</em>. Tomamos una decisión real y la modelamos con funciones: lineales, exponenciales, interés compuesto y porcentajes."</div>
+<div class="say"><strong>(2 · El problema)</strong> "Martín, de Córdoba, tiene 30 millones ahorrados, usa el auto para trabajar, recorre 15.000 km/año y lo quiere tener 5 años. Duda entre tres autos y tres formas de pago. La pregunta que guía todo: <strong>¿el auto más barato de comprar es el más barato de tener?</strong>"</div>
+<div class="say"><strong>(3 · Las variables)</strong> "Tres autos con datos reales de junio 2026. La clave: separar lo que pagás <strong>fijo</strong> (precio, seguro, patente) de lo que pagás <strong>por km</strong> (energía y mantenimiento). La energía tiene dos precios: nafta $2.084/L y luz EPEC $220/kWh."</div>
+<div class="say"><strong>(4 · La matemática)</strong> "El costo de tener el auto 5 años es lineal: <strong>C(K) = ordenada + pendiente·K</strong>, K = km totales. El eléctrico arranca más caro —ordenada 84 millones— pero su km es baratísimo: <strong>42 pesos contra 142 del nafta</strong>."</div>
+<div class="say"><strong>(5 · El gráfico y el cruce)</strong> "Como cada auto tiene distinta ordenada y pendiente, las rectas se cruzan. El cruce nafta↔eléctrico está en <strong>20.200 km/año</strong>: por debajo conviene el nafta, por encima el eléctrico. A los 15.000 km de Martín gana el nafta, por muy poco —178 mil pesos menos que el híbrido—. Así que <strong>NO: el más barato de comprar no es siempre el más barato de tener; depende de cuánto manejes.</strong>"</div>
+
+<h3>🧠 Defensa teórica</h3>
+<p><strong>Por qué lineal:</strong> el costo por km es <strong>constante</strong>; una magnitud que crece a tasa constante es una recta.</p>
+<div class="fml">C(K) = b + m·K          (K = km totales = km/año × 5)
+b (ordenada) = precio + horizonte × (seguro + precio × patente%)
+m (pendiente) = (consumo/100 × precio_energía) + mantenimiento/km</div>
+<table>
+  <thead><tr><th>Auto</th><th>Recta C(K)</th></tr></thead>
+  <tbody>
+    <tr><td class="t-nafta">Nafta</td><td class="mono">74.335.600 + 142,1·K</td></tr>
+    <tr><td class="t-hibrido">Híbrido</td><td class="mono">76.458.250 + 116,2·K</td></tr>
+    <tr><td class="t-electrico">Eléctrico</td><td class="mono">84.450.000 + 42,0·K</td></tr>
+  </tbody>
+</table>
+<p><strong>Punto de equilibrio (saber derivarlo en el pizarrón):</strong> dos rectas se igualan →</p>
+<div class="fml">b_a + m_a·K = b_b + m_b·K   →   K* = (b_b − b_a) / (m_a − m_b)
+Nafta vs eléctrico: (84.450.000 − 74.335.600) / (142,1 − 42,0)
+= 10.114.400 / 100,1 ≈ 101.000 km totales  →  ÷5 = 20.200 km/año ✓</div>
+
+<h3>❓ Si te preguntan</h3>
+<p class="qa"><b>¿Por qué lineal?</b> → El costo por km es constante; a tasa constante, recta.</p>
+<p class="qa"><b>¿Qué son b y m?</b> → b = lo fijo (precio + seguro + patente). m = lo que suma cada km.</p>
+<p class="qa"><b>¿Por qué se cruzan?</b> → El eléctrico arranca más arriba (b mayor) pero sube más despacio (m menor). Tarde o temprano lo alcanza.</p>
+<p class="qa"><b>¿Arriba de 20.200 siempre gana el eléctrico?</b> → Sí frente al nafta; frente al híbrido el cruce es a 21.535.</p>
+</div>
+
+<!-- ===================== TABLA DE PARES ===================== -->
+<div class="section">
+<h2>📋 Tabla de pares ordenados (Slide 5 · Mateo)</h2>
+<p>La consigna pide <strong>tabla + pares ordenados + gráfico</strong>. Cada fila es un par (km/año, costo total a 5 años). En <strong>negrita</strong>, el que gana. <span class="note">(La misma tabla está visible en la app, slide «La matemática».)</span></p>
+<table>
+  <thead><tr><th class="num">km/año</th><th class="num">K (totales)</th><th class="num">Nafta</th><th class="num">Híbrido</th><th class="num">Eléctrico</th><th>Gana</th></tr></thead>
+  <tbody>
+    <tr><td class="num">0</td><td class="num">0</td><td class="num"><strong class="t-nafta">$74.335.600</strong></td><td class="num">$76.458.250</td><td class="num">$84.450.000</td><td>Nafta</td></tr>
+    <tr><td class="num">5.000</td><td class="num">25.000</td><td class="num"><strong class="t-nafta">$77.888.700</strong></td><td class="num">$79.363.250</td><td class="num">$85.499.500</td><td>Nafta</td></tr>
+    <tr><td class="num">10.000</td><td class="num">50.000</td><td class="num"><strong class="t-nafta">$81.441.800</strong></td><td class="num">$82.268.250</td><td class="num">$86.549.000</td><td>Nafta</td></tr>
+    <tr><td class="num">15.000</td><td class="num">75.000</td><td class="num"><strong class="t-nafta">$84.994.900</strong></td><td class="num">$85.173.250</td><td class="num">$87.598.500</td><td>Nafta <em>(Martín)</em></td></tr>
+    <tr><td class="num">20.000</td><td class="num">100.000</td><td class="num">$88.548.000</td><td class="num"><strong class="t-hibrido">$88.078.250</strong></td><td class="num">$88.648.000</td><td>Híbrido</td></tr>
+    <tr><td class="num">25.000</td><td class="num">125.000</td><td class="num">$92.101.100</td><td class="num">$90.983.250</td><td class="num"><strong class="t-electrico">$89.697.500</strong></td><td>Eléctrico</td></tr>
+    <tr><td class="num">30.000</td><td class="num">150.000</td><td class="num">$95.654.200</td><td class="num">$93.888.250</td><td class="num"><strong class="t-electrico">$90.747.000</strong></td><td>Eléctrico</td></tr>
+  </tbody>
+</table>
+<h3>Los tres cruces (pares donde dos rectas se igualan)</h3>
+<table>
+  <thead><tr><th>Cruce</th><th class="num">km totales</th><th class="num">km/año</th></tr></thead>
+  <tbody>
+    <tr><td>Nafta = Híbrido</td><td class="num">81.880</td><td class="num"><strong>16.376</strong></td></tr>
+    <tr><td>Nafta = Eléctrico</td><td class="num">100.999</td><td class="num"><strong>20.200</strong></td></tr>
+    <tr><td>Híbrido = Eléctrico</td><td class="num">107.677</td><td class="num"><strong>21.535</strong></td></tr>
+  </tbody>
+</table>
+<div class="callout">
+  🔑 <strong>Lectura fina (luce mucho):</strong> hay <strong>tres zonas</strong>, no dos:
+  <ul>
+    <li>Hasta ~16.376 km/año → gana el <span class="t-nafta">Nafta</span> (caso de Martín: 15.000).</li>
+    <li>Entre 16.376 y 21.535 km/año → gana el <span class="t-hibrido">Híbrido</span> (franja intermedia que solo se ve en la tabla completa).</li>
+    <li>Más de ~21.535 km/año → gana el <span class="t-electrico">Eléctrico</span>.</li>
+  </ul>
+  A 15.000 km/año el nafta le gana al híbrido por apenas <strong>$178.350</strong>. Tan poco que un cambio chico (manejar más, o que suba la nafta) da vuelta el resultado → conecta con la parte de Enzo.
+</div>
+</div>
+
+<!-- ===================== ENZO ===================== -->
+<div class="section">
+<h2><span class="pill pill-enzo">Enzo</span> Slides 6 a 8 — el "wow": cómo todo se mueve</h2>
+<p>Mostrás que la conclusión <strong>no es fija</strong>: depende del precio de la energía. Lo nuevo y fuerte: modelamos la suba de <strong>las dos</strong> energías (nafta y luz), que empujan el cruce en sentidos opuestos.</p>
+
+<h3>🗣️ Lo que decís</h3>
+<div class="say"><strong>(6 · Sensibilidad)</strong> "El precio de la energía no sube una cantidad fija: sube un <strong>porcentaje cada año</strong> → función <strong>exponencial</strong>. Hay dos sliders. <strong>Si sube la nafta</strong>, la recta del nafta se inclina y el cruce <strong>se desploma</strong>: hoy 20.200 km/año; con +25% ~11.100; +50% ~6.560; +100% ~2.660. <strong>Si sube la LUZ</strong> (viene ~32%/año), el efecto es al revés, el cruce <strong>sube</strong>: con +50% el eléctrico recién conviene pasando los ~47.000 km/año, y arriba de ~70% ya no conviene a ningún uso. Las dos empujan en sentidos opuestos: por eso modelamos las dos y no congelamos ninguna."</div>
+<div class="say"><strong>(7 · Mapa de decisión)</strong> "Este mapa combina km/año con la suba de la nafta y pinta qué auto gana en cada combinación: se ve de un vistazo dónde conviene cada uno."</div>
+<div class="say"><strong>(8 · Costo en 3D)</strong> "Lo mismo en tres dimensiones: el costo según los km y la suba de la energía. La superficie muestra cómo el eléctrico mejora si sube la nafta y empeora si sube la luz."</div>
+<div class="say"><strong>(Aclaración honesta)</strong> "Antes manteníamos la luz fija y decíamos que eso hacía la conclusión <strong>conservadora</strong> a favor del eléctrico. Ahora modelamos la suba de <strong>las dos</strong> energías con datos reales. Aun así, a precios de hoy gana el nafta hasta ~20.200 km/año: la conclusión <strong>no depende de congelar una variable</strong>."</div>
+
+<h3>🧠 Defensa teórica</h3>
+<p><strong>Por qué exponencial:</strong> el precio sube un % sobre el valor del año anterior (crecimiento compuesto), no una cantidad fija. Vale para nafta y luz.</p>
+<div class="fml">precio_energía(t) = precio₀ · (1 + r)^t        (r = suba anual)
+precio_efectivo = precio₀ · (1/H) · Σ (1+r)^t,  t = 0 … H−1</div>
+<p>El precio efectivo entra en la <strong>pendiente</strong>. Subir la nafta inclina nafta/híbrido → cruce <strong>baja</strong>. Subir la luz inclina el eléctrico → cruce <strong>sube</strong>.</p>
+<p><strong>Porcentajes sueltos:</strong> patente 3% del valor (ordenada) · inflación del auto ~15%/año · intereses del prendario 117% · suba de luz EPEC ~32%/año (apenas sobre la inflación REM ~30,5%).</p>
+
+<h3>❓ Si te preguntan</h3>
+<p class="qa"><b>¿Qué es un análisis de sensibilidad?</b> → Ver cuánto cambia la respuesta del modelo al variar un parámetro (la suba de nafta o de luz). Mide qué tan <strong>robusta</strong> es la conclusión.</p>
+<p class="qa"><b>¿No es trampa mantener la luz fija?</b> → Ya <strong>no</strong> la mantenemos fija: modelamos la suba de las dos. Subir la nafta adelanta al eléctrico; subir la luz lo atrasa.</p>
+<p class="qa"><b>¿De dónde sale el 32% de la luz?</b> → Del aumento interanual real de la tarifa plena de EPEC (dato de la empresa, vía La Voz / Ente Regulador).</p>
+<p class="qa"><b>¿Por qué promedian el precio?</b> → Para mantener una sola recta por auto; es una simplificación declarada, y el resultado es casi idéntico.</p>
+</div>
+
+<!-- ===================== BAUTISTA ===================== -->
+<div class="section">
+<h2><span class="pill pill-bauti">Bautista</span> Slides 9, 10 y 12 — pago, límites y validación</h2>
+
+<h3>🗣️ Lo que decís</h3>
+<div class="say"><strong>(9 · Cómo lo paga)</strong> "A Martín le faltan <strong>25,9 millones</strong> (el auto sale 55,9 y tiene 30). Tres opciones. <strong>Prendario</strong> (sistema francés = interés compuesto): 45% anual a 48 meses → cuota <strong>$1.173.000/mes</strong>, total <strong>56,3 millones</strong>; los intereses (117%) son MÁS que lo que pidió. <strong>Esperar</strong> en plazo fijo: 30M al 19% juntan 36,2M, pero el auto sube a 64,3M → el faltante crece a 28,1M. <strong>Contado</strong> es lo más barato, si junta la diferencia."</div>
+<div class="say"><strong>(10 · Lo que el modelo no captura)</strong> "Para ser honestos: no modelamos el <strong>valor de reventa</strong> a 5 años —el BYD Atto 3 ni se vende acá, sería un supuesto de baja confianza, y modelar la reventa de solo dos de tres autos sesgaría la comparación—. Tampoco descontamos a valor presente. Son simplificaciones <strong>declaradas</strong>, no errores tapados."</div>
+<div class="say"><strong>(12 · Fuentes)</strong> "Cada dato tiene <strong>fuente y nivel de confianza</strong>. Nafta $2.084/L y plazo fijo 19% son de alta confianza. La luz EPEC ~$220/kWh es una proyección a jun-2026 sobre el último cuadro oficial (confianza media), y su suba ~32% sale del interanual real. Hallazgo honesto: el BYD Atto 3 no se vende en Argentina, usamos precio de referencia; los EV chinos que sí se venden son más baratos → conclusión <strong>conservadora</strong>."</div>
+<div class="say"><strong>(Marco teórico)</strong> "Seguimos los <strong>6 subprocesos de Blomhøj</strong>: formular, sistematizar, matematizar, analizar, interpretar y validar. No inventamos números: recorrimos todo el ciclo."</div>
+
+<h3>🧠 Defensa teórica</h3>
+<div class="fml">gap = precio − ahorro = 55.944.000 − 30.000.000 = 25.944.000
+
+Prendario (francés): cuota = gap · i / (1 − (1+i)^(−n)),  i = TNA/12 = 0,0375 ; n = 48
+→ cuota ≈ $1.173.346 · total ×48 = $56.320.599 · intereses $30.376.599 = 117%
+
+Plazo fijo: capital_final = ahorro · (1 + TNA/12)^meses  (TNA 19%)
+→ 30M a 1 año ≈ $36.223.530 ; auto +15% → $64.335.600 ; faltante $28.112.070 (creció)</div>
+<table>
+  <thead><tr><th>Subproceso de Blomhøj</th><th>En nuestro trabajo</th></tr></thead>
+  <tbody>
+    <tr><td>(a) Formular</td><td>¿Qué auto conviene y cómo pagarlo?</td></tr>
+    <tr><td>(b) Sistematizar</td><td>Precio, consumo, km/año, energía, patente, seguro, tasas</td></tr>
+    <tr><td>(c) Matematizar</td><td>Las 3 rectas C(K), la exponencial de nafta y luz, la cuota francesa</td></tr>
+    <tr><td>(d) Analizar</td><td>Cruces, sensibilidad de las dos energías, formas de pago</td></tr>
+    <tr><td>(e) Interpretar</td><td>"Nafta hasta ~20.200 km/año; arriba, eléctrico"</td></tr>
+    <tr><td>(f) Validar</td><td>Comparar con datos reales 2026 + reconocer límites</td></tr>
+  </tbody>
+</table>
+
+<h3>❓ Si te preguntan</h3>
+<p class="qa"><b>¿Interés simple vs compuesto?</b> → Simple: siempre sobre el capital inicial. Compuesto: los intereses se suman al capital y generan nuevos intereses.</p>
+<p class="qa"><b>¿Por qué el sistema francés?</b> → Cuota fija; cada una paga interés del saldo + parte de capital. Al principio se paga más interés que capital.</p>
+<p class="qa"><b>Si el plazo fijo rinde 19%, ¿por qué no conviene esperar?</b> → Porque el auto sube 15% partiendo de un valor mucho más alto que el ahorro; el faltante crece más rápido de lo que rinde.</p>
+</div>
+
+<!-- ===================== CIERRE + CHULETA + BANCO + CHECKLIST ===================== -->
+<div class="section">
+<h2><span class="pill pill-eq">Equipo</span> Cierre — Slide 11 (Conclusión)</h2>
+<div class="say"><strong>Mateo:</strong> "A 15.000 km/año, hoy le conviene el <strong>nafta</strong> —gana por poco—."</div>
+<div class="say"><strong>Enzo:</strong> "Pero si manejara más de ~20.200 km/año, o si la nafta se dispara, conviene el <strong>eléctrico</strong> —y se sostiene aunque también suba la luz—."</div>
+<div class="say"><strong>Bautista:</strong> "Para pagarlo: contado es lo más barato, el prendario suma 117% de intereses, y esperar no alcanza."</div>
+<div class="say"><strong>Cierre:</strong> "Las funciones no son temas sueltos: <strong>viven dentro de una decisión real</strong>."</div>
+
+<h2>📐 Chuleta de fórmulas</h2>
+<table>
+  <tbody>
+    <tr><td>Costo total (lineal)</td><td class="mono">C(K) = b + m·K</td></tr>
+    <tr><td>Ordenada (fijo)</td><td class="mono">b = precio + H·(seguro + precio·patente%)</td></tr>
+    <tr><td>Pendiente (por km)</td><td class="mono">m = (consumo/100)·precio_energía + mant/km</td></tr>
+    <tr><td>Punto de equilibrio</td><td class="mono">K* = (b_b − b_a) / (m_a − m_b)</td></tr>
+    <tr><td>Energía sube (exponencial)</td><td class="mono">p(t) = p₀·(1+r)^t — nafta y luz</td></tr>
+    <tr><td>Precio efectivo (promedio)</td><td class="mono">p_ef = p₀·(1/H)·Σ(1+r)^t, t=0..H−1</td></tr>
+    <tr><td>Costo anual de tener</td><td class="mono">(seguro + precio·patente) + (energía/km + mant/km)·km_año</td></tr>
+    <tr><td>Breakeven temporal (años)</td><td class="mono">t* = (precio_b − precio_a) / (costoAnual_a − costoAnual_b)</td></tr>
+    <tr><td>Cuota francesa</td><td class="mono">cuota = gap·i / (1 − (1+i)^(−n)) ; i = TNA/12</td></tr>
+    <tr><td>Interés compuesto (plazo fijo)</td><td class="mono">C_final = C·(1+r)^t</td></tr>
+  </tbody>
+</table>
+<p class="note"><strong>Breakeven en años:</strong> el sobreprecio del eléctrico ($7,06M) se recupera en <strong>t* ≈ 7,9 años</strong> al uso de Martín — más que los 5 del horizonte, por eso a 5 años todavía no conviene.</p>
+
+<h2>🛡️ Banco de preguntas difíciles</h2>
+<p class="qa"><b>1. ¿Esto lo hicieron ustedes?</b> → "Sí: el caso es nuestro, los datos con fuente, y la matemática la derivamos a mano." <em>(Y derivá K* en el pizarrón.)</em></p>
+<p class="qa"><b>2. ¿Qué le falta al modelo?</b> → "Lo decimos en la slide de límites: no descontamos el <strong>valor de reventa</strong> ni a valor presente. La suba de la luz, que antes faltaba, ahora <strong>sí la modelamos</strong>."</p>
+<p class="qa"><b>3. ¿Por qué esos tres autos?</b> → "Misma gama (Corolla Cross nafta/híbrido + un EV de referencia) para comparar parejo. El EV equivalente no se vende acá: es parte del hallazgo."</p>
+<p class="qa"><b>4. Si cambio un dato, ¿se cae todo?</b> → "No: la app recalcula con las mismas fórmulas. Probémoslo en vivo." <em>(Mové un slider, nafta o luz.)</em></p>
+<p class="qa"><b>5. ¿Dónde está cada función?</b> → Lineal: costo total. Exponencial: suba de nafta y luz. Interés compuesto: crédito y plazo fijo. Porcentajes: patente, seguro, inflación.</p>
+<p class="qa"><b>6. ¿Por qué la luz sube el cruce y la nafta lo baja?</b> → La luz es el combustible del eléctrico (si sube, necesita más km para convenir → cruce sube); la nafta es el del nafta (si sube, el eléctrico conviene antes → cruce baja).</p>
+
+<h2>📋 Lista de control honesta (BIEN / FALTA / RIESGOS)</h2>
+<p><strong class="ok">✅ Lo que está BIEN:</strong> caso real bien formulado · cuatro familias de funciones · sensibilidad de las dos energías · validación con fuentes y niveles de confianza · marco de Blomhøj visible por slide · app + calculadora · matemática verificada (<code>npm run verify</code>, 19/19) · slide de límites + breakeven en años + suba de luz EPEC · tabla de pares visible en la app.</p>
+<p><strong class="warn">⏳ Lo que faltaba (y su estado):</strong> suba de luz EPEC → <span class="ok">HECHO</span> · tabla de pares visible → <span class="ok">HECHO</span> · coherencia de slides (12) → <span class="ok">HECHO</span> · derivar la fórmula a mano → <span class="warn">a practicar cada uno</span> · decir límites antes de que pregunten → <span class="ok">slide de límites</span> · gráfico de las 3 rectas → <span class="ok">listo</span>.</p>
+<p><strong class="bad">⚠️ Riesgos:</strong> que parezca que no lo hicimos nosotros → dominar la matemática a mano · que el diseño tape la matemática → mostrar fórmulas y derivación · números nuevos (cruce <strong>20.200</strong>, breakeven <strong>7,9 años</strong>, luz <strong>$220</strong> / +32%): los tres dicen lo mismo, no leer los viejos (19.578 / 7,5 / $200).</p>
+
+<h2>✅ Checklist antes de exponer</h2>
+<ul>
+  <li>Cada uno puede <strong>derivar su fórmula clave a mano</strong>, sin la app.</li>
+  <li>Tabla de pares ordenados a la vista (está en la app y acá).</li>
+  <li>Practicar mover los sliders en vivo (nafta <strong>y</strong> luz) sin trabarse.</li>
+  <li>Tener la slide de fuentes a mano.</li>
+  <li>Probar la app en el proyector y en el celu (QR) antes de empezar.</li>
+  <li>Decir las limitaciones nosotros, antes de que pregunten.</li>
+  <li>Ensayar el cierre coral (las tres líneas + frase final).</li>
+  <li>Repasar interés simple vs compuesto (cae seguro).</li>
+  <li>Memorizar los números finales: cruce <strong>20.200 km/año</strong> · ventaja nafta <strong>$178.350</strong> · breakeven <strong>7,9 años</strong> · luz <strong>$220</strong> (+32%/año).</li>
+</ul>
+</div>
+
+</body>
+</html>

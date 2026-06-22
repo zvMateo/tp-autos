@@ -10,6 +10,7 @@ import {
   calcularAuto,
   cruces,
   cruceNaftaElectricoKmAnio,
+  cruceNaftaElectricoLuzKmAnio,
   calcularFinanzas,
   costoEnKm,
   ganador,
@@ -37,6 +38,7 @@ const fixture: Params = {
   tnaPlazoFijo: 0.35,
   inflacionAutoAnual: 0.4,
   subaNaftaAnual: 0,
+  subaLuzAnual: 0,
 };
 
 let fallos = 0;
@@ -70,6 +72,9 @@ okRound("cruce Nafta↔Eléctrico", get("nafta", "electrico"), 31_250);
 okRound("cruce Nafta↔Híbrido", get("nafta", "hibrido"), 46_637);
 okRound("cruce Híbrido↔Eléctrico", get("hibrido", "electrico"), 15_438);
 okRound("sensibilidad nafta +50%", cruceNaftaElectricoKmAnio(fixture, 0.5)!, 11_104);
+// La suba de la LUZ mueve el cruce hacia ARRIBA (efecto opuesto al de la nafta):
+// con luz +50% el eléctrico necesita MÁS km/año para convenir.
+okRound("sensibilidad luz +50%", cruceNaftaElectricoLuzKmAnio(fixture, 0.5)!, 53_757);
 ok("breakeven Nafta→Eléctrico (años)", breakevenAnios(fixture, "nafta", "electrico")!, 17.543859, 0.001);
 
 const f = calcularFinanzas(fixture);

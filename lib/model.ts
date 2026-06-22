@@ -64,6 +64,8 @@ export interface Params {
   // --- Análisis de sensibilidad ---
   /** Suba anual de la nafta usada en el modelo (fracción). 0 = sin suba. */
   subaNaftaAnual: number;
+  /** Suba anual de la luz / tarifa EPEC usada en el modelo (fracción). 0 = sin suba. */
+  subaLuzAnual: number;
 }
 
 // ----------------------------------------------------------------------------
@@ -81,7 +83,7 @@ export const defaults: Params = {
   horizonteAnios: 5, // supuesto del caso
   kmAnio: 15000, // Martín (supuesto del caso)
   nafta: 2084, // $/litro — YPF súper Córdoba, jun 2026
-  luz: 200, // $/kWh — EPEC residencial, estimado jun 2026
+  luz: 220, // $/kWh — EPEC residencial sin subsidio, proyección jun 2026 (cuadro oficial sep-2025 ~$200 + ajustes FAM)
   patentePct: 0.03, // Córdoba, tramo valuación $20–50M (jun 2026)
   autos: {
     nafta: {
@@ -118,6 +120,7 @@ export const defaults: Params = {
   inflacionAutoAnual: 0.15, // 0km AR 2026 (corriendo por debajo de la inflación)
   // sensibilidad
   subaNaftaAnual: 0,
+  subaLuzAnual: 0,
 };
 
 // ----------------------------------------------------------------------------
@@ -125,11 +128,13 @@ export const defaults: Params = {
 // ----------------------------------------------------------------------------
 
 /**
- * Factor promedio de capitalización del precio de la nafta sobre el horizonte.
+ * Factor promedio de capitalización de un precio que sube a tasa `r` anual,
+ * promediado sobre el horizonte:
  *   mean((1+r)^t, t = 0 .. horizonte-1)
- * Con r = 0 devuelve 1 (sin suba).
+ * Con r = 0 devuelve 1 (sin suba). Sirve para cualquier vector energético
+ * (nafta o luz): cada uno aplica la misma fórmula con su propia tasa.
  */
-export function factorNaftaEfectivo(r: number, horizonteAnios: number): number {
+export function factorCapitalizacion(r: number, horizonteAnios: number): number {
   if (horizonteAnios <= 0) return 1;
   let suma = 0;
   for (let t = 0; t < horizonteAnios; t++) suma += Math.pow(1 + r, t);
@@ -138,11 +143,12 @@ export function factorNaftaEfectivo(r: number, horizonteAnios: number): number {
 
 /**
  * Precio efectivo promedio del vector energético sobre el horizonte.
- * La nafta se ajusta por la suba anual; la luz se asume estable.
+ * Tanto la nafta como la luz se ajustan por su suba anual (exponencial),
+ * promediada con la MISMA fórmula. Con suba 0 el precio queda en el valor base.
  */
 export function precioEnergiaEfectivo(p: Params, energia: Energia): number {
-  if (energia === "luz") return p.luz;
-  return p.nafta * factorNaftaEfectivo(p.subaNaftaAnual, p.horizonteAnios);
+  if (energia === "luz") return p.luz * factorCapitalizacion(p.subaLuzAnual, p.horizonteAnios);
+  return p.nafta * factorCapitalizacion(p.subaNaftaAnual, p.horizonteAnios);
 }
 
 // ----------------------------------------------------------------------------
@@ -301,12 +307,29 @@ export function breakevenAnios(p: Params, a: AutoKey, b: AutoKey): number | null
 // Sensibilidad: cruce nafta ↔ eléctrico en función de la suba de la nafta
 // ----------------------------------------------------------------------------
 
-/** Cruce nafta↔eléctrico (km/año) para una suba anual r dada. */
-export function cruceNaftaElectricoKmAnio(p: Params, r: number): number | null {
-  const pr: Params = { ...p, subaNaftaAnual: r };
+/** Cruce nafta↔eléctrico (km/año) recalculado sobre params ya ajustados. */
+function cruceNaftaElectrico(pr: Params): number | null {
   const nafta = calcularAuto(pr, "nafta");
   const electrico = calcularAuto(pr, "electrico");
   return cruceKmAnio(pr, nafta, electrico);
+}
+
+/**
+ * Cruce nafta↔eléctrico (km/año) para una suba anual de la NAFTA `r`.
+ * Sube la nafta → se encarece el km del nafta → el cruce BAJA (al eléctrico le
+ * conviene antes). Respeta el resto de los params (incluida la suba de luz).
+ */
+export function cruceNaftaElectricoKmAnio(p: Params, r: number): number | null {
+  return cruceNaftaElectrico({ ...p, subaNaftaAnual: r });
+}
+
+/**
+ * Cruce nafta↔eléctrico (km/año) para una suba anual de la LUZ `r`.
+ * Sube la luz → se encarece el km del eléctrico → el cruce SUBE (al eléctrico le
+ * conviene más tarde). Es el efecto OPUESTO al de la nafta.
+ */
+export function cruceNaftaElectricoLuzKmAnio(p: Params, r: number): number | null {
+  return cruceNaftaElectrico({ ...p, subaLuzAnual: r });
 }
 
 // ----------------------------------------------------------------------------
@@ -393,18 +416,28 @@ export function serieCostos(p: Params, maxKmTotal: number, steps = 80): PuntoCos
 }
 
 export interface PuntoSensibilidad {
-  /** Suba anual de la nafta como porcentaje (0..100) */
+  /** Suba anual de la energía como porcentaje (0..100) */
   pct: number;
   /** Cruce nafta↔eléctrico en km/año (null si no aplica) */
   cruce: number | null;
 }
 
-/** Serie cruce(km/año) vs % de suba de la nafta, de 0 a 100% (G2). */
+/** Serie cruce(km/año) vs % de suba de la NAFTA, de 0 a 100% (G2). El cruce baja. */
 export function serieSensibilidad(p: Params, steps = 50): PuntoSensibilidad[] {
   const pts: PuntoSensibilidad[] = [];
   for (let s = 0; s <= steps; s++) {
     const r = s / steps; // 0 .. 1
     pts.push({ pct: r * 100, cruce: cruceNaftaElectricoKmAnio(p, r) });
+  }
+  return pts;
+}
+
+/** Serie cruce(km/año) vs % de suba de la LUZ, de 0 a 100% (G2). El cruce sube. */
+export function serieSensibilidadLuz(p: Params, steps = 50): PuntoSensibilidad[] {
+  const pts: PuntoSensibilidad[] = [];
+  for (let s = 0; s <= steps; s++) {
+    const r = s / steps; // 0 .. 1
+    pts.push({ pct: r * 100, cruce: cruceNaftaElectricoLuzKmAnio(p, r) });
   }
   return pts;
 }

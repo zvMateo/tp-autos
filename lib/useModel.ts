@@ -26,7 +26,8 @@ export type NumParamKey =
   | "mesesPrendario"
   | "tnaPlazoFijo"
   | "inflacionAutoAnual"
-  | "subaNaftaAnual";
+  | "subaNaftaAnual"
+  | "subaLuzAnual";
 
 /** Campos numéricos editables de cada auto. */
 export type NumAutoField = "precio" | "consumo" | "mantKm" | "seguro";

@@ -1,10 +1,13 @@
 "use client";
 
-import { AUTO_KEYS } from "@/lib/model";
+import { AUTO_KEYS, costoEnKm } from "@/lib/model";
 import { AUTO_UI } from "@/lib/autos";
 import type { UseModel } from "@/lib/useModel";
 import { SlideFrame } from "./SlideFrame";
-import { formatMoney, formatNumber } from "@/lib/format";
+import { formatKm, formatMoney, formatNumber } from "@/lib/format";
+
+/** Puntos de K (km totales) donde mostrar los pares ordenados (K, C(K)). */
+const K_TABLA = [0, 25_000, 50_000, 75_000, 100_000];
 
 function Capa({ color, titulo, formula, ejemplo }: { color: string; titulo: string; formula: string; ejemplo: string }) {
   return (
@@ -19,9 +22,17 @@ function Capa({ color, titulo, formula, ejemplo }: { color: string; titulo: stri
   );
 }
 
-/** Slide 4 — La matemática: las 3 rectas + las 4 familias de funciones. */
+/** Slide 4 — La matemática: las 3 rectas, las 4 familias y la tabla de pares ordenados. */
 export function SlideMatematica({ model }: { model: UseModel }) {
   const { results } = model;
+
+  // Pares ordenados (K, C(K)) de cada recta + cuál es el más barato en cada K.
+  const filas = K_TABLA.map((K) => {
+    const costos = AUTO_KEYS.map((k) => ({ k, c: costoEnKm(results.autos[k], K) }));
+    const minKey = costos.reduce((a, b) => (b.c < a.c ? b : a)).k;
+    return { K, costos, minKey };
+  });
+
   return (
     <SlideFrame eyebrow="La matemática" title="Una recta por auto" graphPaper>
       <div className="grid gap-10 lg:grid-cols-[1.05fr_1fr]">
@@ -76,8 +87,8 @@ export function SlideMatematica({ model }: { model: UseModel }) {
             <Capa
               color="var(--car-nafta)"
               titulo="Exponencial"
-              formula="nafta(t) = nafta₀·(1+r)ᵗ"
-              ejemplo="El precio de la nafta sube año a año."
+              formula="energía(t) = precio₀·(1+r)ᵗ"
+              ejemplo="El precio de la nafta y el de la luz suben año a año."
             />
             <Capa
               color="var(--car-electrico)"
@@ -88,11 +99,56 @@ export function SlideMatematica({ model }: { model: UseModel }) {
             <Capa
               color="var(--car-hibrido)"
               titulo="Porcentajes"
-              formula="patente = 3,5% · valor"
+              formula="patente = 3% · valor"
               ejemplo="Patente, inflación del auto, intereses."
             />
           </div>
         </div>
+      </div>
+
+      <div className="mt-8 rounded-2xl border border-line bg-surface p-5 shadow-sm">
+        <div className="mb-3 flex flex-wrap items-baseline justify-between gap-x-3 gap-y-1">
+          <h3 className="text-sm font-semibold text-ink">Tabla de pares ordenados (K, C(K))</h3>
+          <span className="text-xs text-faint">K = km totales · costo de tener cada auto · el más barato resaltado</span>
+        </div>
+        <div className="overflow-x-auto">
+          <table className="w-full min-w-[34rem] border-collapse text-sm">
+            <thead>
+              <tr className="text-left text-xs uppercase tracking-wide text-faint">
+                <th className="py-2 pr-4 font-semibold">K (km totales)</th>
+                {AUTO_KEYS.map((k) => (
+                  <th key={k} className="py-2 pr-4 font-semibold" style={{ color: AUTO_UI[k].color }}>
+                    {AUTO_UI[k].short}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody className="tnum font-mono">
+              {filas.map((f) => (
+                <tr key={f.K} className="border-t border-line/60">
+                  <td className="py-2 pr-4 text-muted">{formatKm(f.K)}</td>
+                  {f.costos.map(({ k, c }) => {
+                    const esMin = k === f.minKey;
+                    return (
+                      <td
+                        key={k}
+                        className={`py-2 pr-4 ${esMin ? "font-semibold" : "text-muted"}`}
+                        style={esMin ? { color: AUTO_UI[k].color } : undefined}
+                      >
+                        {formatMoney(c)}
+                        {esMin && <span className="ml-1 text-[10px]">●</span>}
+                      </td>
+                    );
+                  })}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <p className="mt-3 max-w-3xl text-xs text-muted">
+          Cada fila es un punto de las tres rectas. Se lee el cruce: a pocos km el más barato es el nafta; al crecer K, el
+          eléctrico (pendiente menor) lo alcanza y lo pasa.
+        </p>
       </div>
     </SlideFrame>
   );

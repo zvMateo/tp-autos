@@ -3,7 +3,7 @@
 Aplicación web interactiva para exponer en clase el TP de modelización: **qué auto comprar
 (nafta / híbrido / eléctrico) según cuánto se maneje, y cómo pagarlo**. Tiene dos modos:
 
-- **Presentación** — 9 slides a pantalla completa (incluye «Fuentes y confiabilidad»), navegables con el teclado (←/→/Espacio).
+- **Presentación** — 12 slides a pantalla completa (incluye «Fuentes y confiabilidad»), navegables con el teclado (←/→/Espacio).
 - **Calculadora** — dashboard con sliders que recalculan todos los gráficos y resultados en vivo.
 
 Toda la matemática vive en `lib/model.ts` (fuente de verdad). Nada se hardcodea en la UI:
@@ -47,7 +47,8 @@ Cada uno recalcula gráficos y resultados al instante. **"Restaurar referencia"*
 - **Años que lo tiene** — horizonte del análisis (eje de las rectas = km totales).
 - **Precio de la nafta** ($/L) — afecta el costo por km de nafta e híbrido.
 - **Precio de la luz** ($/kWh) — afecta el costo por km del eléctrico.
-- **Suba anual de la nafta** (%) — capa exponencial; inclina las rectas y baja el punto de cruce.
+- **Suba anual de la nafta** (%) — capa exponencial; inclina las rectas y **baja** el punto de cruce.
+- **Suba anual de la luz (EPEC)** (%) — capa exponencial sobre el eléctrico; **sube** el punto de cruce (efecto opuesto a la nafta).
 - **Patente** (% anual del valor) — parte del costo fijo (ordenada).
 
 ### Autos (nafta / híbrido / eléctrico)
@@ -68,7 +69,7 @@ Cada uno recalcula gráficos y resultados al instante. **"Restaurar referencia"*
   - `pendiente = energía/km + mantenimiento/km`
   - `ordenada = precio + horizonte·(seguro + precio·patente)`
 - Punto de equilibrio: `K* = (ordenada_b − ordenada_a) / (pendiente_a − pendiente_b)`.
-- Sensibilidad: precio nafta efectivo = `nafta₀ · mean((1+r)^t, t = 0..horizonte−1)`.
+- Sensibilidad: precio efectivo de cada energía = `precio₀ · mean((1+r)^t, t = 0..horizonte−1)`, con su propia tasa de suba (nafta y luz).
 - Finanzas: cuota francesa, plazo fijo capitalizado mensual, escenario "esperar".
 
 ## Estructura
@@ -79,7 +80,7 @@ lib/            model.ts (fuente de verdad) · format.ts · autos.ts · useModel
 components/     CalculatorMode · PresentationMode · paneles · CarCard
 components/ui/  Slider · NumberField · CountUp · ModeToggle
 components/charts/  CostLinesChart (G1) · SensitivityChart (G2) · FinanceChart (G3)
-components/slides/  las 9 slides + SlideFrame
+components/slides/  las 12 slides + SlideFrame
 lib/sources.ts  fuentes + confianza por dato (alimenta la slide «Fuentes»)
 SOURCES.md      tabla de fuentes para revisión
 scripts/        verify-model.mts (asserts contra la tabla del brief)

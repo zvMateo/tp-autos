@@ -137,7 +137,7 @@ pendiente = energía/km + mantenimiento/km                      ← costo variab
       </tbody>
     </table>
     <p class="note">
-      Energía: nafta $2.084/L · luz $200/kWh. Patente 3% anual del valor. Horizonte: 5 años. Martín maneja 15.000 km/año.
+      Energía: nafta $2.084/L · luz $220/kWh (EPEC, proyección jun-2026). Patente 3% anual del valor. Horizonte: 5 años. Martín maneja 15.000 km/año.
       <br />* El Atto 3 se usa como <strong>referencia internacional</strong>: a junio 2026 no se comercializa en
       Argentina. Precios de nafta/híbrido de lista; mantenimiento y seguro son estimaciones de mercado.
     </p>
@@ -150,7 +150,7 @@ pendiente = energía/km + mantenimiento/km                      ← costo variab
       <tbody>
         <tr><td class="t-nafta">Nafta</td><td class="num">$74.335.600</td><td class="num">142,1</td><td class="num">$84.994.900</td></tr>
         <tr><td class="t-hibrido">Híbrido</td><td class="num">$76.458.250</td><td class="num">116,2</td><td class="num">$85.173.250</td></tr>
-        <tr><td class="t-electrico">Eléctrico</td><td class="num">$84.450.000</td><td class="num">38,8</td><td class="num">$87.360.000</td></tr>
+        <tr><td class="t-electrico">Eléctrico</td><td class="num">$84.450.000</td><td class="num">42,0</td><td class="num">$87.598.500</td></tr>
       </tbody>
     </table>
 
@@ -162,8 +162,8 @@ pendiente = energía/km + mantenimiento/km                      ← costo variab
       <thead><tr><th>Cruce</th><th>km/año</th><th>Lectura</th></tr></thead>
       <tbody>
         <tr><td>Nafta ↔ Híbrido</td><td class="num">16.376</td><td style="text-align:left;color:var(--muted)">arriba de eso, el híbrido empieza a convenir sobre la nafta</td></tr>
-        <tr><td>Nafta ↔ Eléctrico</td><td class="num">19.578</td><td style="text-align:left;color:var(--muted)">arriba de eso, el eléctrico le gana a la nafta</td></tr>
-        <tr><td>Híbrido ↔ Eléctrico</td><td class="num">20.651</td><td style="text-align:left;color:var(--muted)">el eléctrico supera al híbrido recién acá</td></tr>
+        <tr><td>Nafta ↔ Eléctrico</td><td class="num">20.200</td><td style="text-align:left;color:var(--muted)">arriba de eso, el eléctrico le gana a la nafta</td></tr>
+        <tr><td>Híbrido ↔ Eléctrico</td><td class="num">21.535</td><td style="text-align:left;color:var(--muted)">el eléctrico supera al híbrido recién acá</td></tr>
       </tbody>
     </table>
     <div class="callout">
@@ -172,17 +172,45 @@ pendiente = energía/km + mantenimiento/km                      ← costo variab
       <p style="margin:6px 0 0">Le gana al híbrido por <strong>$178.350</strong> en 5 años. Como Martín maneja menos que todos los cruces, el menor precio de compra de la nafta todavía pesa más que el ahorro de combustible.</p>
     </div>
 
-    <h2>3. La capa exponencial — sensibilidad a la nafta</h2>
+    <h3>El cruce, en tiempo: ¿en qué año se paga el sobreprecio?</h3>
     <p>
-      Si la nafta sube todos los años a una tasa <code>r</code>, su precio efectivo promedio sobre el horizonte es el
-      promedio de una progresión geométrica:
+      El cruce en kilómetros es útil, pero se comunica mejor en <strong>años</strong>. El eléctrico cuesta
+      <strong>$7.056.000</strong> más que la nafta al comprar: manejando 15.000 km/año, ¿en qué año recupera ese
+      sobreprecio gracias a lo que ahorra en combustible y mantenimiento? Para responderlo hay que descomponer el costo
+      <strong>en el tiempo</strong> (no en km), porque los costos fijos —seguro y patente— se pagan todos los años:
     </p>
-    <span class="fml-block">nafta_efectiva = nafta₀ · promedio( (1 + r)^t ),  t = 0 … horizonte−1</span>
+    <span class="fml-block">costoAcumulado(t) = precio + t · costoAnual
+
+costoAnual = (seguro + precio · patente) + (energía/km + mant/km) · km_año
+
+año* = (precio_B − precio_A) / (costoAnual_A − costoAnual_B)</span>
     <p>
-      Subir la nafta inclina las rectas de la nafta y el híbrido (más pendiente) y <strong>baja el punto de cruce</strong>:
+      Con los datos de Martín da <strong>≈ 7,9 años</strong>: el eléctrico recién se paga su sobreprecio
+      <strong>más allá de los 5 años</strong> que lo va a tener. Si manejara 40.000 km/año, en cambio, baja a ~2 años.
+    </p>
+    <p class="note">
+      Cuidado: este "año de repago" <strong>no es</strong> el cruce en km dividido por los km/año. El modelo de rectas
+      <code>C(K)</code> amortiza los costos fijos sobre todo el horizonte (van en la ordenada), mientras que el repago
+      real los acumula año a año. Por eso da un valor algo mayor que el cruce del gráfico — y es el correcto para hablar
+      de "cuándo se recupera".
+    </p>
+
+    <h2>3. La capa exponencial — sensibilidad a las dos energías</h2>
+    <p>
+      Si una energía sube todos los años a una tasa <code>r</code>, su precio efectivo promedio sobre el horizonte es el
+      promedio de una progresión geométrica (vale igual para la nafta y para la luz):
+    </p>
+    <span class="fml-block">energía_efectiva = energía₀ · promedio( (1 + r)^t ),  t = 0 … horizonte−1</span>
+    <p>
+      Subir la <strong>nafta</strong> inclina las rectas de la nafta y el híbrido (más pendiente) y <strong>baja el punto de cruce</strong>:
       el eléctrico empieza a convenir antes. Con una suba del <strong>+50% anual</strong>, el cruce nafta↔eléctrico cae a
-      <strong>11.104 km/año</strong> (desde 19.578 con nafta estable). Por eso la decisión es tan sensible al combustible:
-      el <strong>mapa de decisión</strong> y el <strong>gráfico 3D</strong> muestran cómo se mueve esa frontera.
+      <strong>~6.560 km/año</strong> (desde 20.200 con la energía estable).
+    </p>
+    <p>
+      Subir la <strong>luz</strong> de EPEC hace lo contrario: encarece el km del eléctrico y <strong>sube el cruce</strong>.
+      La tarifa viene subiendo ~32% al año; con la luz +50% el eléctrico recién conviene pasando los ~47.000 km/año, y por
+      encima de ~70% de suba ya no le conviene a ningún uso. Modelamos las <strong>dos</strong> energías (no congelamos
+      ninguna): el <strong>mapa de decisión</strong> y el <strong>gráfico 3D</strong> muestran cómo se mueve esa frontera.
     </p>
 
     <h2>4. La capa financiera — cómo pagar la nafta</h2>
@@ -208,7 +236,30 @@ pendiente = energía/km + mantenimiento/km                      ← costo variab
     </div>
     <p class="note">El <strong>contado</strong> (cuando se llega) es siempre lo más barato: no paga intereses ni pierde contra la inflación del auto.</p>
 
-    <h2>5. Reparto de la exposición</h2>
+    <h2>5. Lo que el modelo no captura — la validación</h2>
+    <p>
+      Un buen modelo reconoce sus límites: esto es la fase de <strong>validación</strong> del ciclo de modelización.
+      Estos factores quedan afuera del número final, y nombrarlos es parte del trabajo, no una falla.
+    </p>
+    <ul style="color:var(--muted);font-size:0.92rem;line-height:1.65;padding-left:20px">
+      <li><strong>Costo de oportunidad del capital:</strong> los $30M podrían rendir invertidos (plazo fijo, dólares); el modelo no descuenta ese rendimiento perdido.</li>
+      <li><strong>Tiempo y conveniencia de carga:</strong> cargar el eléctrico lleva horas; la nafta, minutos. El modelo cuenta pesos, no tiempo ni comodidad.</li>
+      <li><strong>Infraestructura de carga:</strong> en Córdoba y el interior la red pública es escasa — un riesgo real de uso que no está puesto en plata.</li>
+      <li><strong>Disponibilidad del eléctrico:</strong> el Atto 3 se usa como referencia internacional; a junio 2026 no se vende oficialmente en Argentina.</li>
+    </ul>
+    <div class="callout">
+      <div class="who" style="font-size:0.72rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--faint)">El que más cuesta: el valor de reventa</div>
+      <p style="margin:6px 0 0">
+        Un auto se vende al final, y eso cambia el costo real. Investigamos la depreciación a 5 años: los Toyota nafta e
+        híbrido retienen ~<strong>60%</strong> de su valor (dato construido con precios de usados en dólares, confianza
+        media). Pero el eléctrico <strong>no tiene mercado de reventa local confiable</strong> —ni se vende en el país—,
+        así que el único número disponible es un supuesto extranjero de baja confianza. <strong>Decidimos no
+        modelarlo:</strong> meter una reventa firme para unos autos y un supuesto flojo para otro sesgaría la
+        comparación. Lo dejamos como límite explícito, que es lo honesto.
+      </p>
+    </div>
+
+    <h2>6. Reparto de la exposición</h2>
     <div class="cards">
       <div class="card">
         <div class="who">Abre y modelo lineal</div>
@@ -218,6 +269,7 @@ pendiente = energía/km + mantenimiento/km                      ← costo variab
           <li>Variables y datos del caso</li>
           <li>Rectas C(K): ordenada vs pendiente</li>
           <li>El gráfico y el punto de equilibrio K*</li>
+          <li>El cruce en años: repago del sobreprecio</li>
         </ul>
       </div>
       <div class="card">
@@ -237,12 +289,13 @@ pendiente = energía/km + mantenimiento/km                      ← costo variab
           <li>El gap y la cuota francesa</li>
           <li>Plazo fijo vs inflación del auto</li>
           <li>Intereses como porcentaje (117%)</li>
+          <li>Lo que el modelo no captura (validación)</li>
           <li>Conclusión y recomendación</li>
         </ul>
       </div>
     </div>
 
-    <h2>6. La conclusión en una frase</h2>
+    <h2>7. La conclusión en una frase</h2>
     <div class="callout">
       <p class="lead" style="margin:0">
         <strong>No hay un auto que gane siempre.</strong> Para Martín, que maneja poco, hoy conviene la
