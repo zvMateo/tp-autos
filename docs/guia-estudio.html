@@ -227,7 +227,7 @@ Plazo fijo: capital_final = ahorro · (1 + TNA/12)^meses  (TNA 19%)
 <div class="say"><strong>Bautista:</strong> "Para pagarlo: contado es lo más barato, el prendario suma 117% de intereses, y esperar no alcanza."</div>
 <div class="say"><strong>Cierre:</strong> "Las funciones no son temas sueltos: <strong>viven dentro de una decisión real</strong>."</div>
 
-<h2>📐 Chuleta de fórmulas</h2>
+<h2> fórmulas</h2>
 <table>
   <tbody>
     <tr><td>Costo total (lineal)</td><td class="mono">C(K) = b + m·K</td></tr>
@@ -269,6 +269,83 @@ Plazo fijo: capital_final = ahorro · (1 + TNA/12)^meses  (TNA 19%)
   <li>Repasar interés simple vs compuesto (cae seguro).</li>
   <li>Memorizar los números finales: cruce <strong>20.200 km/año</strong> · ventaja nafta <strong>$178.350</strong> · breakeven <strong>7,9 años</strong> · luz <strong>$220</strong> (+32%/año).</li>
 </ul>
+</div>
+
+<!-- ===================== MARCO CONCEPTUAL ===================== -->
+<div class="section">
+<h2>📘 Marco conceptual — variables, fórmulas y conceptos de la materia</h2>
+<p>Lámina de referencia para relacionar cada parte del modelo con los temas de <strong>Funciones</strong>. La idea de fondo: convertimos una decisión real en <strong>tres rectas de costo</strong>, buscamos dónde se cruzan, y le montamos encima la suba de las energías y el costo de financiar.</p>
+
+<h3>La lógica del planteo</h3>
+<p>El costo de cada auto se parte en dos: <strong>lo fijo</strong> (compra + seguro + patente, se paga aunque el auto no se mueva) y <strong>lo variable</strong> (energía + mantenimiento, se paga por km). Con esa separación, el costo de tener cada auto durante 5 años es una <strong>función lineal de los km</strong>: <span class="mono">C(K) = ordenada + pendiente·K</span>. Tres autos → tres rectas → se cruzan. La pregunta que ordena todo: <strong>¿el auto más barato de comprar es el más barato de tener?</strong></p>
+
+<h3>Variables de ENTRADA (definen el caso)</h3>
+<table>
+  <thead><tr><th>Grupo</th><th>Variables (valor)</th><th>Tipo</th></tr></thead>
+  <tbody>
+    <tr><td>El caso</td><td class="mono">horizonte = 5 años · kmAnio = 15.000 · patente = 3%</td><td>supuesto / dato</td></tr>
+    <tr><td>Energías</td><td class="mono">nafta = $2.084/L · luz = $220/kWh</td><td>dato (luz: media)</td></tr>
+    <tr><td>Auto nafta</td><td class="mono">precio $55,9M · 6,1 L/100km · mant 15 $/km · seguro $2,0M</td><td>dato / estim.</td></tr>
+    <tr><td>Auto híbrido</td><td class="mono">precio $57,4M · 5,0 L/100km · mant 12 $/km · seguro $2,1M</td><td>dato / estim.</td></tr>
+    <tr><td>Auto eléctrico</td><td class="mono">precio $63,0M · 15,9 kWh/100km · mant 7 $/km · seguro $2,4M</td><td>ref. / estim.</td></tr>
+    <tr><td>Financiera</td><td class="mono">ahorro $30M · TNA prendario 45% / 48 meses · plazo fijo 19% · inflación auto 15%</td><td>dato / supuesto</td></tr>
+    <tr><td>Sensibilidad</td><td class="mono">subaNaftaAnual = 0% · subaLuzAnual = 0%</td><td>perillas (base = hoy)</td></tr>
+  </tbody>
+</table>
+<p class="note">Las dos subas arrancan en 0% a propósito: el escenario por defecto es "a precios de hoy", simétrico. Los sliders exploran el futuro.</p>
+
+<h3>Variables DERIVADAS (las calcula el modelo)</h3>
+<div class="fml">factorCapitalización(r, H) = (1/H) · Σ (1+r)^t,  t = 0 … H−1     (con r = 0 → 1)
+precioEnergíaEfectivo = precio_base · factorCapitalización(suba_de_esa_energía, H)
+energíaPorKm = (consumo / 100) · precioEnergíaEfectivo            ($/km)
+pendiente    = energíaPorKm + mantKm                              ($/km)  ← lo variable
+ordenada     = precio + H · (seguro + precio · patente%)          ($)     ← lo fijo
+costoTotal   = ordenada + pendiente · (kmAnio · H)                ($)</div>
+<p>Con los datos de hoy (subas en 0), salen las tres rectas reales:</p>
+<table>
+  <thead><tr><th>Auto</th><th class="num">Ordenada (fijo)</th><th class="num">Pendiente ($/km)</th><th>Recta C(K)</th></tr></thead>
+  <tbody>
+    <tr><td class="t-nafta">Nafta</td><td class="num">$74.335.600</td><td class="num">142,1</td><td class="mono">74.335.600 + 142,1·K</td></tr>
+    <tr><td class="t-hibrido">Híbrido</td><td class="num">$76.458.250</td><td class="num">116,2</td><td class="mono">76.458.250 + 116,2·K</td></tr>
+    <tr><td class="t-electrico">Eléctrico</td><td class="num">$84.450.000</td><td class="num">42,0</td><td class="mono">84.450.000 + 42,0·K</td></tr>
+  </tbody>
+</table>
+<p>El eléctrico <strong>arranca más arriba</strong> (ordenada mayor) pero <strong>sube más despacio</strong> (pendiente 42 vs 142). Por eso las rectas se cruzan: igualando dos de ellas (un <strong>sistema de ecuaciones lineales</strong>) sale el punto de equilibrio.</p>
+<div class="fml">ordenada_a + pendiente_a·K = ordenada_b + pendiente_b·K
+K* = (ordenada_b − ordenada_a) / (pendiente_a − pendiente_b)
+nafta↔eléctrico: (84.450.000 − 74.335.600) / (142,1 − 42,0) ≈ 101.000 km tot → ÷5 = 20.200 km/año</div>
+
+<h3 class="bad">¿Por qué ahora es más complejo que al principio?</h3>
+<p>La estructura no cambió; <strong>ganó una dimensión</strong>. Antes la <strong>nafta</strong> subía año a año (exponencial) pero la <strong>luz era una constante</strong> y el eléctrico tenía pendiente fija. Ahora:</p>
+<ul>
+  <li><strong>Nueva variable:</strong> <span class="mono">subaLuzAnual</span> — la luz pasó de constante a <strong>función exponencial del tiempo</strong>, igual que la nafta.</li>
+  <li><strong>Una sola fórmula para las dos energías:</strong> antes había una función específica de la nafta; ahora <span class="mono">factorCapitalización</span> aplica la <strong>misma</strong> matemática a nafta y luz, cada una con su tasa.</li>
+  <li><strong>El eléctrico ya no tiene pendiente fija:</strong> si sube la luz, su km se encarece y <strong>su recta también se inclina</strong>.</li>
+  <li><strong>Sensibilidad de 1 a 2 dimensiones, en sentidos OPUESTOS:</strong> subir la nafta <strong>baja</strong> el cruce (el eléctrico conviene antes); subir la luz lo <strong>sube</strong> (conviene más tarde).</li>
+  <li><strong>Caso límite nuevo:</strong> si la luz sube demasiado (&gt;~70%/año), la pendiente del eléctrico supera a la del nafta, las rectas dejan de cruzarse en km positivos y el eléctrico <strong>no conviene a ningún uso</strong> (cruce sin solución).</li>
+</ul>
+<div class="callout">
+  <strong>Por qué vale esa complejidad:</strong> antes la conclusión dependía de <strong>congelar la luz</strong> (atacable). Al modelar las dos energías, se vuelve <strong>robusta</strong>: mostramos que se sostiene aunque suban ambas, y cuantificamos hasta dónde. Pasamos de un análisis de sensibilidad de <strong>una</strong> variable a uno de <strong>dos</strong> con efectos contrapuestos.
+</div>
+
+<h3>Mapa: concepto de la materia ↔ dónde vive en el modelo</h3>
+<table>
+  <thead><tr><th>Concepto de Funciones</th><th>Dónde aparece</th></tr></thead>
+  <tbody>
+    <tr><td>Función lineal <span class="mono">y = b + m·x</span></td><td>C(K) = ordenada + pendiente·K (costo de tener cada auto)</td></tr>
+    <tr><td>Ordenada al origen</td><td>El costo fijo (compra + seguro + patente)</td></tr>
+    <tr><td>Pendiente</td><td>El costo por km (energía + mantenimiento)</td></tr>
+    <tr><td>Sistema de ecuaciones / intersección de rectas</td><td>El punto de equilibrio K* (igualar dos rectas y despejar)</td></tr>
+    <tr><td>Función exponencial <span class="mono">a·(1+r)^t</span></td><td>La suba de la nafta y de la luz año a año</td></tr>
+    <tr><td>Progresión geométrica / promedio</td><td><span class="mono">factorCapitalización</span>: promedio de los (1+r)^t sobre 5 años</td></tr>
+    <tr><td>Interés compuesto</td><td>Cuota del crédito (sistema francés) y plazo fijo capitalizado</td></tr>
+    <tr><td>Porcentajes</td><td>Patente (3%), inflación del auto (15%), intereses (117%)</td></tr>
+    <tr><td>Análisis de sensibilidad</td><td>Cómo se mueve K* al variar las dos subas</td></tr>
+    <tr><td>Dominio / casos sin solución</td><td>Cuando las rectas no se cruzan en km positivos (cruce nulo)</td></tr>
+    <tr><td>Ciclo de Blomhøj (6 subprocesos)</td><td>Formular → sistematizar → matematizar → analizar → interpretar → validar</td></tr>
+  </tbody>
+</table>
+<p class="note"><strong>El hilo, en una frase:</strong> convertimos una decisión real en tres rectas (lineal), encontramos dónde se cruzan (sistema de ecuaciones), le sumamos la suba de las dos energías (exponencial) y el costo de financiarla (interés compuesto), y mostramos que la respuesta depende de cuánto se maneja y es robusta aunque suban los precios — recorriendo el ciclo de Blomhøj.</p>
 </div>
 
 </body>
