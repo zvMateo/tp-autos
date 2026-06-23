@@ -27,36 +27,48 @@ const LIMITES: Limite[] = [
       "En Córdoba y el interior la red de carga pública es escasa. Es un riesgo real de uso del eléctrico que el modelo no pone en plata.",
     color: "var(--car-nafta)",
   },
-  {
-    titulo: "Disponibilidad del eléctrico",
-    detalle:
-      "El BYD Atto 3 se usa como referencia internacional: a junio 2026 no se vende oficialmente en Argentina. El número existe; el auto en la concesionaria, no.",
-    color: "var(--accent)",
-  },
+  // {
+  //   titulo: "Disponibilidad del eléctrico",
+  //   detalle:
+  //     "El BYD Atto 3 se usa como referencia internacional: a junio 2026 no se vende oficialmente en Argentina. El número existe; el auto en la concesionaria, no.",
+  //   color: "var(--accent)",
+  // },
 ];
 
 /** Slide — Validación: lo que el modelo deja afuera (fase crítica de Blomhøj). */
 export function SlideLimites() {
   return (
-    <SlideFrame eyebrow="Validación · los límites" title="Lo que el modelo no captura">
+    <SlideFrame
+      eyebrow="Validación · los límites"
+      title="Lo que el modelo no captura"
+    >
       <p className="max-w-3xl text-lg leading-relaxed text-muted">
-        Un buen modelo sabe lo que <strong className="text-ink">no</strong> mide. Estos factores quedan afuera del número
-        final —reconocerlos es parte de validar el modelo, no una falla.
+        Un buen modelo sabe lo que <strong className="text-ink">no</strong>{" "}
+        mide. Estos factores quedan afuera del número final —reconocerlos es
+        parte de validar el modelo, no una falla.
       </p>
 
       <div className="mt-8 grid gap-4 sm:grid-cols-2">
         {LIMITES.map((l) => (
-          <div key={l.titulo} className="rounded-2xl border border-line bg-surface p-5 shadow-sm">
+          <div
+            key={l.titulo}
+            className="rounded-2xl border border-line bg-surface p-5 shadow-sm"
+          >
             <div className="flex items-center gap-2.5">
-              <span className="h-2.5 w-2.5 shrink-0 rounded-full" style={{ backgroundColor: l.color }} />
+              <span
+                className="h-2.5 w-2.5 shrink-0 rounded-full"
+                style={{ backgroundColor: l.color }}
+              />
               <h3 className="text-base font-semibold text-ink">{l.titulo}</h3>
             </div>
-            <p className="mt-2 text-sm leading-relaxed text-muted">{l.detalle}</p>
+            <p className="mt-2 text-sm leading-relaxed text-muted">
+              {l.detalle}
+            </p>
           </div>
         ))}
       </div>
 
-      <div className="mt-4 rounded-2xl border-2 border-accent/40 bg-accent-soft/40 p-5">
+      {/* <div className="mt-4 rounded-2xl border-2 border-accent/40 bg-accent-soft/40 p-5">
         <div className="text-xs font-semibold uppercase tracking-wide text-accent">
           El que más nos costó: valor de reventa
         </div>
@@ -69,7 +81,7 @@ export function SlideLimites() {
           <strong className="text-ink">Decidimos no modelarlo:</strong> meter una reventa firme para los autos con datos
           y un supuesto flojo para el eléctrico sesgaría la comparación. Preferimos dejarlo como límite explícito.
         </p>
-      </div>
+      </div> */}
     </SlideFrame>
   );
 }
