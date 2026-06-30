@@ -42,6 +42,7 @@ const FASE_POR_SLIDE: Record<string, Fase | null> = {
   pago: "analizar",
   limites: "validar",
   conclusion: "interpretar",
+  blomhoj: null,
   fuentes: null,
 };
 

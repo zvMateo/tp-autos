@@ -11,19 +11,27 @@ import { SlideGrafico } from "./slides/SlideGrafico";
 import { SlideSensibilidad } from "./slides/SlideSensibilidad";
 import { SlidePago } from "./slides/SlidePago";
 import { SlideConclusion } from "./slides/SlideConclusion";
-import { SlideLimites } from "./slides/SlideLimites";
+// import { SlideLimites } from "./slides/SlideLimites";
 import { SlideFuentes } from "./slides/SlideFuentes";
 import { SlideMapa } from "./slides/SlideMapa";
 import { SlidePython } from "./slides/SlidePython";
 import { SlideFunciones } from "./slides/SlideFunciones";
+import { SlideBlomhoj } from "./slides/SlideBlomhoj";
 import { FaseBadge, faseDeSlide } from "./FaseBadge";
 import dynamic from "next/dynamic";
 
 // Lazy-load del slide 3D: three.js / R3F solo se descargan al entrar a esta slide.
-const SlideEspacio = dynamic(() => import("./slides/SlideEspacio").then((m) => m.SlideEspacio), {
-  ssr: false,
-  loading: () => <div className="grid h-full place-items-center text-sm text-faint">Cargando espacio 3D…</div>,
-});
+const SlideEspacio = dynamic(
+  () => import("./slides/SlideEspacio").then((m) => m.SlideEspacio),
+  {
+    ssr: false,
+    loading: () => (
+      <div className="grid h-full place-items-center text-sm text-faint">
+        Cargando espacio 3D…
+      </div>
+    ),
+  },
+);
 
 interface SlideDef {
   id: string;
@@ -33,19 +41,68 @@ interface SlideDef {
 
 const SLIDES: SlideDef[] = [
   { id: "portada", label: "Portada", Comp: () => <SlidePortada /> },
-  { id: "funciones", label: "¿Qué son las funciones?", Comp: () => <SlideFunciones /> },
-  { id: "problema", label: "El problema", Comp: ({ model }) => <SlideProblema model={model} /> },
-  { id: "variables", label: "Las variables", Comp: ({ model }) => <SlideVariables model={model} /> },
-  { id: "matematica", label: "La matemática", Comp: ({ model }) => <SlideMatematica model={model} /> },
-  { id: "grafico", label: "El gráfico y el cruce", Comp: ({ model }) => <SlideGrafico model={model} /> },
-  { id: "sensibilidad", label: "Sensibilidad", Comp: ({ model }) => <SlideSensibilidad model={model} /> },
-  { id: "mapa", label: "Mapa de decisión", Comp: ({ model }) => <SlideMapa model={model} /> },
-  { id: "espacio", label: "El costo en 3D", Comp: ({ model }) => <SlideEspacio model={model} /> },
-  { id: "pago", label: "Cómo lo paga", Comp: ({ model }) => <SlidePago model={model} /> },
-  { id: "limites", label: "Límites del modelo", Comp: () => <SlideLimites /> },
-  { id: "conclusion", label: "Conclusión", Comp: ({ model }) => <SlideConclusion model={model} /> },
+  {
+    id: "funciones",
+    label: "¿Qué son las funciones?",
+    Comp: () => <SlideFunciones />,
+  },
+  {
+    id: "problema",
+    label: "El problema",
+    Comp: ({ model }) => <SlideProblema model={model} />,
+  },
+  {
+    id: "variables",
+    label: "Las variables",
+    Comp: ({ model }) => <SlideVariables model={model} />,
+  },
+  {
+    id: "matematica",
+    label: "La matemática",
+    Comp: ({ model }) => <SlideMatematica model={model} />,
+  },
+  {
+    id: "grafico",
+    label: "El gráfico y el cruce",
+    Comp: ({ model }) => <SlideGrafico model={model} />,
+  },
+  {
+    id: "sensibilidad",
+    label: "Sensibilidad",
+    Comp: ({ model }) => <SlideSensibilidad model={model} />,
+  },
+  {
+    id: "mapa",
+    label: "Mapa de decisión",
+    Comp: ({ model }) => <SlideMapa model={model} />,
+  },
+  {
+    id: "espacio",
+    label: "El costo en 3D",
+    Comp: ({ model }) => <SlideEspacio model={model} />,
+  },
+  {
+    id: "pago",
+    label: "Cómo lo paga",
+    Comp: ({ model }) => <SlidePago model={model} />,
+  },
+  // { id: "limites", label: "Límites del modelo", Comp: () => <SlideLimites /> },
+  {
+    id: "conclusion",
+    label: "Conclusión",
+    Comp: ({ model }) => <SlideConclusion model={model} />,
+  },
+  {
+    id: "blomhoj",
+    label: "Los 6 subprocesos",
+    Comp: ({ model }) => <SlideBlomhoj model={model} />,
+  },
   { id: "fuentes", label: "Fuentes", Comp: () => <SlideFuentes /> },
-  { id: "python", label: "Puente a Python", Comp: ({ model }) => <SlidePython model={model} /> },
+  {
+    id: "python",
+    label: "Puente a Python",
+    Comp: ({ model }) => <SlidePython model={model} />,
+  },
 ];
 
 const variants = {
@@ -57,7 +114,12 @@ const variants = {
 function isInteractive(el: Element | null): boolean {
   if (!el) return false;
   const tag = el.tagName;
-  return tag === "INPUT" || tag === "TEXTAREA" || tag === "SELECT" || el.getAttribute("role") === "slider";
+  return (
+    tag === "INPUT" ||
+    tag === "TEXTAREA" ||
+    tag === "SELECT" ||
+    el.getAttribute("role") === "slider"
+  );
 }
 
 /** Modo Presentación: slides a pantalla completa, navegables con teclado. */
@@ -140,7 +202,8 @@ export function PresentationMode({ model }: { model: UseModel }) {
               className="h-2 rounded-full transition-all"
               style={{
                 width: i === index ? 22 : 8,
-                backgroundColor: i === index ? "var(--accent)" : "var(--line-strong)",
+                backgroundColor:
+                  i === index ? "var(--accent)" : "var(--line-strong)",
               }}
             />
           ))}
